@@ -31,7 +31,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const resultArray = await res.json();
     return {
         props: {
-            data: _.filter(_.slice(resultArray?.[1], 49), (o) => o?.value),
+            data: _.filter(_.slice(resultArray?.[1], 49), (o: CountryType) => o?.value),  // get only the countries that have GNP data
         },
     };
 };
