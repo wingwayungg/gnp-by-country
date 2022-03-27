@@ -4,10 +4,10 @@ import { CountryType } from "@type/countryType";
 import * as R from 'ramda'
 
 const no_display = 10;
-const hook = ()=>{
+const useCountryFilterData = ()=>{
     const router = useRouter();
     const {country, greaterThan, lessThan, orderAsc, orderBy, page} = router.query
-    const useCountryFilterData = (data: CountryType[]) => {
+    const filterCountryFilterData = (data: CountryType[]) => {
         const filterData = useMemo(() => {
             const filter_By_Country = R.when(
                 () => !R.isNil(country),
@@ -22,7 +22,7 @@ const hook = ()=>{
             const filter = R.compose(sortBy, filter_By_Country, filter_By_GreaterThan, filter_By_LessThan);
             return filter(data)
         }, [country, greaterThan, lessThan, orderAsc, orderBy]) // no need to filter again when only page changes
-        return filterData;
+        return filterData as CountryType[];
     };
     
      const showCurrentPage =(data: CountryType[])=>{
@@ -30,6 +30,6 @@ const hook = ()=>{
         const showCurrentPage = R.slice((currentPage - 1) * no_display, currentPage * no_display);
         return showCurrentPage(data)
     } 
-    return {useCountryFilterData, showCurrentPage}
+    return {filterCountryFilterData, showCurrentPage}
 }
-export default hook
+export default useCountryFilterData

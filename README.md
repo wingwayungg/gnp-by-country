@@ -11,13 +11,7 @@ This is a simple website, listing the Gross National Profit(GNP) of each country
 The languages I used is React, TypeScript, Scss in Next.js framework
 
 ## Deployment
-<!-- Please visit  -->
-
-<!-- ## Points to note
-This application is not prefect. There are some points remain to be fixed.
-* (Major) Error occurs when user create book with ISBN, which already exists.
-* (Minor) The navigation tab on the top has UI problems.
-* (Minor) When user click edit button on the table on Book List page, and immediately return to Book List page by clicking "Book List" tab, and then click "Create Book" tab, the fields are non-empty. -->
+Please visit https://country-by-gnp-wingwayungg.vercel.app/
 
 ## Running in local environment
 If one wishs to run this project locally, please follow the following steps:

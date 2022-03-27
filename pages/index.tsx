@@ -4,11 +4,11 @@ import _ from "lodash";
 import { CountryTable } from "@components/table/CountryTable";
 import { Pages } from "@components/pagination/Pages";
 import { Form } from "@components/form/Form";
-import hook from "@hook/useCountryFilterData";
+import useCountryFilterData from "@hook/useCountryFilterData";
 
 export default function Home({ data }: { data: CountryType[] }) {
-    const { useCountryFilterData, showCurrentPage } = hook();
-    const data_Total = useCountryFilterData(data);
+    const { filterCountryFilterData, showCurrentPage } = useCountryFilterData();
+    const data_Total = filterCountryFilterData(data);
     return (
         <div className="px-5">
             <h1 className="my-2 my-md-3">GNP by Country</h1>
