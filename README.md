@@ -14,7 +14,7 @@ The languages I used is React, TypeScript, Scss in Next.js framework
 Please visit https://country-by-gnp-wingwayungg.vercel.app/
 
 ## Running in local environment
-If one wishs to run this project locally, please follow the following steps:
+If one wishes to run this project locally, please follow the following steps:
 1. Clone this repo and change to the project directory 
 2. Install required packages
 ```
