@@ -1,4 +1,4 @@
-# GNP by Country
+# GDP per person employed
 This is a simple website, listing the Gross National Profit(GNP) of each country in the year 2020. The data is taken from WorldBank. The features of this project include:
 <ul>
   <li>searching by keywords</li>
