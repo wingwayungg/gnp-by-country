@@ -11,7 +11,7 @@ export default function Home({ data }: { data: CountryType[] }) {
     const data_Total = filterCountryFilterData(data);
     return (
         <div className="px-5">
-            <h1 className="my-2 my-md-3">GDP per person employed</h1>
+            <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
             <div className="d-flex flex-column flex-md-row gap-3">
                 <div className="w-md-50 order-md-first order-last">
                     <CountryTable countries={showCurrentPage(data_Total)} />
