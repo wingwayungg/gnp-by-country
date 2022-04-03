@@ -1,10 +1,11 @@
 import { FC } from "react";
-import { CountryType } from "@type/countryType";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Arrow } from "./Arrow";
+import { CountryType } from "@type/countryType";
 import { OrderByEnum } from "@type/sortType";
+import styles from "@styles/countryTable.module.scss";
 
 const myLoader = ({ src }) => `https://countryflagsapi.com/svg/${src}`;
 
@@ -42,7 +43,7 @@ export const CountryTable: FC<CountryTableType> = ({ countries }) => {
                             <Image loader={myLoader} src={country?.country?.id} alt="Picture of the author" width={50} height={30} />
                             <span className="ps-2">{country?.country?.value}</span>
                         </div>
-                        <span>{country?.value ?? 0}</span>
+                        <span className={styles.tabularNumbersEqualWidth}>{country?.value ?? 0}</span>
                     </div>
                 ))
             ) : (
