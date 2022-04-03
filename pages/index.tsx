@@ -7,21 +7,20 @@ import { Form } from "@components/form/Form";
 import useCountryFilterData from "@hook/useCountryFilterData";
 
 export default function Home({ data }: { data: CountryType[] }) {
-    const { filterCountryFilterData, showCurrentPage } = useCountryFilterData();
-    const data_Total = filterCountryFilterData(data);
+    const { dataDisplayed, totalPage } = useCountryFilterData(data);
     return (
         <div className="px-5">
             <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
             <div className="d-flex flex-column flex-md-row gap-3">
                 <div className="w-md-50 order-md-first order-last">
-                    <CountryTable countries={showCurrentPage(data_Total)} />
+                    <CountryTable countries={dataDisplayed} />
                 </div>
                 <div className="w-md-50">
                     <Form />
                 </div>
             </div>
             <div className="mt-3"></div>
-            <Pages totalPage={Math.ceil(data_Total?.length / 10)} />
+            <Pages totalPage={totalPage} />
         </div>
     );
 }
