@@ -2,8 +2,8 @@
 This is a simple website, listing the Gross Domestic Profit(GDP) per person employed of each country in the year 2020. The data is taken from WorldBank. The features of this project include:
 <ul>
   <li>searching by keywords</li>
-  <li>filtering by range of GNP</li>
-  <li>sorting by name or value of GNP</li>
+  <li>filtering by range of GDP</li>
+  <li>sorting by name or value of GDP</li>
   <li>pagination</li>
 </ul>
 
