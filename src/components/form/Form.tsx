@@ -2,12 +2,7 @@ import { FC, useEffect } from "react";
 import route, { useRouter } from "next/router";
 import styles from "@styles/form.module.scss";
 import { FormEvent, useState } from "react";
-
-enum Input {
-    Country = "Country",
-    Greater = "Greater",
-    Less = "Less",
-}
+import { InputEnum } from "@type/inputType"
 
 export const Form: FC = () => {
     const router = useRouter();
@@ -16,13 +11,13 @@ export const Form: FC = () => {
     const [lessThan, setLessThan] = useState<number | "">("");
 
     const input = (id: string, placeholder: string, value: string | number, onChange: (e: FormEvent<HTMLInputElement>) => void) => (
-        <input type={id === Input.Country ? "text" : "number"} className="px-3 py-2 rounded-3 w-100 w-md-auto" id={id} placeholder={placeholder} value={value} onChange={onChange} />
+        <input type={id === InputEnum.Country ? "text" : "number"} className="px-3 py-2 rounded-3 w-100 w-md-auto" id={id} placeholder={placeholder} value={value} onChange={onChange} />
     );
-    const inputOnChange = (e: FormEvent<HTMLInputElement>, type: Input) => {
+    const inputOnChange = (e: FormEvent<HTMLInputElement>, type: InputEnum) => {
         const target = e.target as HTMLInputElement;
-        if (type === Input.Country) {
+        if (type === InputEnum.Country) {
             setCountry(target.value);
-        } else if (type === Input.Greater) {
+        } else if (type === InputEnum.Greater) {
             setGreaterThan(parseInt(target.value));
         } else {
             setLessThan(parseInt(target.value));
@@ -39,24 +34,24 @@ export const Form: FC = () => {
     return (
         <>
             <div className="mb-3">
-                <label htmlFor={Input.Country} className="form-label d-block mb-2">
+                <label htmlFor={InputEnum.Country} className="form-label d-block mb-2">
                     Country Name
                 </label>
-                {input(Input.Country, "Country", country, (e: FormEvent<HTMLInputElement>) => {
-                    inputOnChange(e, Input.Country);
+                {input(InputEnum.Country, "Country", country, (e: FormEvent<HTMLInputElement>) => {
+                    inputOnChange(e, InputEnum.Country);
                 })}
             </div>
             <div className="mb-3">
-                <label htmlFor={Input.Greater} className="form-label d-block me-3 mb-2">
+                <label htmlFor={InputEnum.Greater} className="form-label d-block me-3 mb-2">
                     GNP per Capital
                 </label>
                 <div className="d-flex">
-                    {input(Input.Greater, "Greater than", greaterThan, (e: FormEvent<HTMLInputElement>) => {
-                        inputOnChange(e, Input.Greater);
+                    {input(InputEnum.Greater, "Greater than", greaterThan, (e: FormEvent<HTMLInputElement>) => {
+                        inputOnChange(e, InputEnum.Greater);
                     })}
                     <span className="mx-3">-</span>
-                    {input(Input.Less, "Smaller than", lessThan, (e: FormEvent<HTMLInputElement>) => {
-                        inputOnChange(e, Input.Less);
+                    {input(InputEnum.Less, "Smaller than", lessThan, (e: FormEvent<HTMLInputElement>) => {
+                        inputOnChange(e, InputEnum.Less);
                     })}
                 </div>
             </div>
