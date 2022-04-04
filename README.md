@@ -8,10 +8,10 @@ This is a simple website, listing the Gross Domestic Profit(GDP) per person empl
 </ul>
 
 ## Programming Languages
-The languages I used is React, TypeScript, Scss in Next.js framework
+The languages I used is React, TypeScript, Scss under Next.js framework
 
 ## Deployment
-Please visit https://country-by-gnp-wingwayungg.vercel.app/
+Please visit https://gdp-by-country-wingwayungg.vercel.app/
 
 ## Running in local environment
 If one wishes to run this project locally, please follow the following steps:
