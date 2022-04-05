@@ -31,7 +31,7 @@ export const CountryTable: FC<CountryTableType> = ({ countries }) => {
         </Link>
     );
     return (
-        <div className="overflow-scroll rounded-5 border border-2 rounded" style={{ maxHeight: 500, minHeight: 300 }}>
+        <div className="overflow-scroll rounded-5 border border-2 rounded" style={{ height: 500 }}>
             <div className="d-flex justify-content-between px-3 py-3 border border-light border-2 rounded-3" style={{ backgroundColor: "whitesmoke" }}>
                 {button("name", "Country Name")}
                 {button("gnp", "GNP per Capital")}
