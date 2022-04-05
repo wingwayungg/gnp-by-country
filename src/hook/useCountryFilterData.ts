@@ -20,7 +20,7 @@ const useCountryFilterData = (data: CountryType[]) => {
         const sortBy = R.sort(order(sortByKey));
         const filter = R.compose<CountryType[][], CountryType[], CountryType[], CountryType[], CountryType[]>(sortBy, filter_By_Country, filter_By_GreaterThan, filter_By_LessThan);
         return filter(data);
-    }, [country, greaterThan, lessThan, orderAsc, orderBy]); // no need to filter again when only page changes
+    }, [data, country, greaterThan, lessThan, orderAsc, orderBy]); // no need to filter again when only page changes
 
     const currentPage = Number(page) || 1;
     const showCurrentPage = R.slice((currentPage - 1) * no_display, currentPage * no_display);
