@@ -13,6 +13,10 @@ export default function Home({ data }: { data: CountryType[] }) {
         <>
             <Head>
                 <title>GDP per person employed</title>
+                <meta
+                    name="description"
+                    content="List of GDP per person employed of each country in year 2020."
+                ></meta>
             </Head>
             <div className="px-5">
                 <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
