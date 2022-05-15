@@ -37,7 +37,6 @@ export const Form: FC = () => {
             })}
             <VerticalSpace />
             {label(InputEnum.Greater, "GNP per Capital")}
-            {/* <div className={`hstack`}/> */}
             <Stack className="justify-content-between justify-content-md-start" direction="horizontal" gap={3}>
                 {input(InputEnum.Greater, "Greater than", "number", greaterThan, (e: FormEvent<HTMLInputElement>) => {
                     inputOnChange(e, InputEnum.Greater);
@@ -49,7 +48,7 @@ export const Form: FC = () => {
             </Stack>
             <VerticalSpace />
             <Stack direction="horizontal" gap={3}>
-                {/* <button className={`btn btn-primary ${styles.button}`}/> */}
+                {/* <button className={`btn btn-primary ${styles.button} hstack`}/> */}
                 <Button className={styles.button} variant="primary" onClick={() => router.push({ pathname: router.pathname, query: { ...router.query, ...searchResult, page: 1 } }, undefined, { shallow: true })}>
                     Search
                 </Button>
