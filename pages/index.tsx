@@ -1,11 +1,13 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import { CountryType } from "@type/countryType";
 import _ from "lodash";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { CountryTable } from "@components/table/CountryTable";
 import { Pages } from "@components/pagination/Pages";
 import { Form } from "@components/form/Form";
 import useCountryFilterData from "@hook/useCountryFilterData";
+import { CountryType } from "@type/countryType";
 
 export default function Home({ data }: { data: CountryType[] }) {
     const { dataDisplayed, totalPage } = useCountryFilterData(data);
@@ -13,22 +15,18 @@ export default function Home({ data }: { data: CountryType[] }) {
         <>
             <Head>
                 <title>GDP per person employed</title>
-                <meta
-                    name="description"
-                    content="List of GDP per person employed of each country in year 2020."
-                ></meta>
+                <meta name="description" content="List of GDP per person employed of each country in year 2020."></meta>
             </Head>
             <div className="px-5">
                 <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
-                <div className="d-flex flex-column flex-md-row gap-3">
-                    <div className="w-md-50 order-md-first order-last">
-                        <CountryTable countries={dataDisplayed} />
-                    </div>
-                    <div className="w-md-50">
+                <Row className="gap-3 gap-md-0 mb-3">
+                    <Col xs={12} md={6}>
                         <Form />
-                    </div>
-                </div>
-                <div className="mt-3"></div>
+                    </Col>
+                    <Col xs={12} md={{ span: 6, order: "first" }}>
+                        <CountryTable countries={dataDisplayed} />
+                    </Col>
+                </Row>
                 <Pages totalPage={totalPage} />
             </div>
         </>
