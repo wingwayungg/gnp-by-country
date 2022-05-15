@@ -37,7 +37,7 @@ export const Form: FC = () => {
             })}
             <VerticalSpace />
             {label(InputEnum.Greater, "GNP per Capital")}
-            {/* <div className='hstack'}/> */}
+            {/* <div className={`hstack`}/> */}
             <Stack className="justify-content-between justify-content-md-start" direction="horizontal" gap={3}>
                 {input(InputEnum.Greater, "Greater than", "number", greaterThan, (e: FormEvent<HTMLInputElement>) => {
                     inputOnChange(e, InputEnum.Greater);
