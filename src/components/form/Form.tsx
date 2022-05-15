@@ -1,8 +1,9 @@
-import { FC, useEffect } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import route, { useRouter } from "next/router";
+import Button from "react-bootstrap/Button";
+import Stack from "react-bootstrap/Stack";
 import styles from "@styles/form.module.scss";
-import { FormEvent, useState } from "react";
-import { InputEnum } from "@type/inputType"
+import { InputEnum } from "@type/inputType";
 
 export const Form: FC = () => {
     const router = useRouter();
@@ -10,9 +11,6 @@ export const Form: FC = () => {
     const [greaterThan, setGreaterThan] = useState<number | "">("");
     const [lessThan, setLessThan] = useState<number | "">("");
 
-    const input = (id: string, placeholder: string, value: string | number, onChange: (e: FormEvent<HTMLInputElement>) => void) => (
-        <input type={id === InputEnum.Country ? "text" : "number"} className="px-3 py-2 rounded-3 w-100 w-md-auto" id={id} placeholder={placeholder} value={value} onChange={onChange} />
-    );
     const inputOnChange = (e: FormEvent<HTMLInputElement>, type: InputEnum) => {
         const target = e.target as HTMLInputElement;
         if (type === InputEnum.Country) {
@@ -33,37 +31,41 @@ export const Form: FC = () => {
 
     return (
         <>
-            <div className="mb-3">
-                <label htmlFor={InputEnum.Country} className="form-label d-block mb-2">
-                    Country Name
-                </label>
-                {input(InputEnum.Country, "Country", country, (e: FormEvent<HTMLInputElement>) => {
-                    inputOnChange(e, InputEnum.Country);
+            {label(InputEnum.Country, "Country Name")}
+            {input(InputEnum.Country, "Country", "text", country, (e: FormEvent<HTMLInputElement>) => {
+                inputOnChange(e, InputEnum.Country);
+            })}
+            <VerticalSpace />
+            {label(InputEnum.Greater, "GNP per Capital")}
+            <Stack direction="horizontal" gap={3}>
+                {input(InputEnum.Greater, "Greater than", "number", greaterThan, (e: FormEvent<HTMLInputElement>) => {
+                    inputOnChange(e, InputEnum.Greater);
                 })}
-            </div>
-            <div className="mb-3">
-                <label htmlFor={InputEnum.Greater} className="form-label d-block mb-2">
-                    GNP per Capital
-                </label>
-                <div className="d-flex">
-                    {input(InputEnum.Greater, "Greater than", greaterThan, (e: FormEvent<HTMLInputElement>) => {
-                        inputOnChange(e, InputEnum.Greater);
-                    })}
-                    <span className="mx-3">-</span>
-                    {input(InputEnum.Less, "Smaller than", lessThan, (e: FormEvent<HTMLInputElement>) => {
-                        inputOnChange(e, InputEnum.Less);
-                    })}
-                </div>
-            </div>
-            <div className="d-flex justify-content-between justify-content-md-start">
-                <button className={`btn btn-primary ${styles.button}`} onClick={() => router.push({ pathname: router.pathname, query: { ...router.query, ...searchResult, page: 1 } }, undefined, { shallow: true })}>
+                <span>-</span>
+                {input(InputEnum.Less, "Smaller than", "number", lessThan, (e: FormEvent<HTMLInputElement>) => {
+                    inputOnChange(e, InputEnum.Less);
+                })}
+            </Stack>
+            <VerticalSpace />
+            <Stack direction="horizontal" gap={3}>
+                {/* <button className={`btn btn-primary ${styles.button}`}/> */}
+                <Button className={styles.button} variant="primary" onClick={() => router.push({ pathname: router.pathname, query: { ...router.query, ...searchResult, page: 1 } }, undefined, { shallow: true })}>
                     Search
-                </button>
-                <div className="ms-3"></div>
-                <button className={`btn btn-secondary ${styles.button}`} onClick={() => router.push(router.pathname, undefined, { shallow: true })}>
+                </Button>
+                {/* <button className={`btn btn-secondary ${styles.button}`}/> */}
+                <Button className={styles.button} variant="secondary" onClick={() => router.push(router.pathname, undefined, { shallow: true })}>
                     Reset
-                </button>
-            </div>
+                </Button>
+            </Stack>
         </>
     );
 };
+
+const label = (htmlFor: string, text: string) => (
+    <label htmlFor={htmlFor} className="form-label d-block mb-2">
+        {text}
+    </label>
+);
+const input = (id: string, placeholder: string, type: "text" | "number", value: string | number, onChange: (e: FormEvent<HTMLInputElement>) => void) => <input type={type} className="px-3 py-2 rounded-3 w-100 w-md-auto" id={id} placeholder={placeholder} value={value} onChange={onChange} />;
+
+const VerticalSpace = () => <div className="mb-3" />;
