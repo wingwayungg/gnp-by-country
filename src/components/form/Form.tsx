@@ -37,6 +37,7 @@ export const Form: FC = () => {
             })}
             <VerticalSpace />
             {label(InputEnum.Greater, "GNP per Capital")}
+            {/* <div className='hstack'}/> */}
             <Stack direction="horizontal" gap={3}>
                 {input(InputEnum.Greater, "Greater than", "number", greaterThan, (e: FormEvent<HTMLInputElement>) => {
                     inputOnChange(e, InputEnum.Greater);
