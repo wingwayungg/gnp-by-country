@@ -20,9 +20,11 @@ export default function Home({ data }: { data: CountryType[] }) {
             <div className="px-5">
                 <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
                 <Row className="gap-3 gap-md-0 mb-3">
+                    {/* <div className="col-12 col-md-6"><Form/></div> */}
                     <Col xs={12} md={6}>
                         <Form />
                     </Col>
+                    {/* <div className="col-12 col-md-6 order-md-first"><CountryTable/></div> */}
                     <Col xs={12} md={{ span: 6, order: "first" }}>
                         <CountryTable countries={dataDisplayed} />
                     </Col>
