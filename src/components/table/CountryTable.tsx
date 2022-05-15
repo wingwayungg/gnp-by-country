@@ -1,11 +1,12 @@
-import { FC } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import { FC } from "react";
+import Stack from "react-bootstrap/Stack";
 import { Arrow } from "./Arrow";
+import styles from "@styles/countryTable.module.scss";
 import { CountryType } from "@type/countryType";
 import { OrderByEnum } from "@type/sortType";
-import styles from "@styles/countryTable.module.scss";
 
 const myLoader = ({ src }) => `https://countryflagsapi.com/svg/${src}`;
 
@@ -32,20 +33,20 @@ export const CountryTable: FC<CountryTableType> = ({ countries }) => {
     );
     return (
         <div className="overflow-scroll rounded-5 border border-2 rounded" style={{ height: 500 }}>
-            <div className="d-flex justify-content-between px-3 py-3 border border-light border-2 rounded-3" style={{ backgroundColor: "whitesmoke" }}>
+            <Stack className="justify-content-between px-3 py-3 border border-light border-2 rounded-3" direction="horizontal">
                 {button("name", "Country Name")}
                 {button("gnp", "GNP per Capital")}
-            </div>
-            {countries.length ? (
-                countries?.map((country: CountryType, index: number) => (
-                    <div className="d-flex justify-content-between px-3 py-3 border border-light border-2 rounded-3" key={index}>
-                        <div className="d-flex align-items-center">
-                            <Image loader={myLoader} src={country?.country?.id} alt="Picture of the author" width={50} height={30} />
-                            <span className="ps-2">{country?.country?.value}</span>
-                        </div>
-                        <span className={styles.tabularNumbersEqualWidth}>{country?.value ?? 0}</span>
-                    </div>
-                ))
+            </Stack>
+            {countries?.length ? (
+                <>
+                    {countries?.map((country, index) => (
+                        <Stack className="w-100 px-3 py-3 border border-light border-2 rounded-3" direction="horizontal" key={index}>
+                            <Image loader={myLoader} src={country?.country?.id} alt="country flag" width={50} height={30} />
+                            <span className="ms-2 me-auto">{country?.country?.value}</span>
+                            <span className={`${styles.tabularNumbersEqualWidth}`}>{country?.value ?? 0}</span>
+                        </Stack>
+                    ))}
+                </>
             ) : (
                 <div className="mt-5 text-center">No Result!</div>
             )}
