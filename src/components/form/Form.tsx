@@ -42,7 +42,7 @@ export const Form: FC = () => {
                 })}
             </div>
             <div className="mb-3">
-                <label htmlFor={InputEnum.Greater} className="form-label d-block me-3 mb-2">
+                <label htmlFor={InputEnum.Greater} className="form-label d-block mb-2">
                     GNP per Capital
                 </label>
                 <div className="d-flex">

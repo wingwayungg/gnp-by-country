@@ -34,12 +34,6 @@ a {
   transform: rotate(180deg);
 }
 
-.w-md-50 {
-  @media screen and (min-width: 768px) {
-    width: 50%;
-  }
-}
-
 .btn:focus,
 .page-link:focus {
   box-shadow: none !important;
