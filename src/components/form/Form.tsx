@@ -1,9 +1,9 @@
-import { FC, FormEvent, useEffect, useState } from "react";
 import route, { useRouter } from "next/router";
+import { FC, FormEvent, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
-import styles from "@styles/form.module.scss";
 import { InputEnum } from "@type/inputType";
+import styles from "./Form.module.scss";
 
 export const Form: FC = () => {
     const router = useRouter();

@@ -3,10 +3,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
 import Stack from "react-bootstrap/Stack";
-import { Arrow } from "./Arrow";
-import styles from "@styles/countryTable.module.scss";
 import { CountryType } from "@type/countryType";
 import { OrderByEnum } from "@type/sortType";
+import { Arrow } from "./Arrow";
+import styles from "./CountryTable.module.scss";
 
 const myLoader = ({ src }) => `https://countryflagsapi.com/svg/${src}`;
 
