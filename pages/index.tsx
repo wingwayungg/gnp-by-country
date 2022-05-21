@@ -1,6 +1,5 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import _ from "lodash";
 import { Col, Row } from "react-bootstrap";
 import { CountryTable } from "@components/table/CountryTable";
 import { Pages } from "@components/pagination/Pages";
@@ -39,10 +38,10 @@ export const getStaticProps: GetStaticProps = async () => {
     const resultArray = await res.json();
     return {
         props: {
-            data: _.map(
-                _.filter(_.slice(resultArray?.[1], 49), (o: CountryType) => o?.value), // get only the countries that have GNP data
-                (o: CountryType) => ({ ...o, value: Math.trunc(o.value) }) // truncate GDP value to integer
-            ),
+            data: resultArray?.[1]
+                ?.slice(49)
+                ?.filter((o: CountryType) => o?.value) // get only countries that have GNP data
+                ?.map((o: CountryType) => ({ ...o, value: Math.trunc(o.value) })), // truncate GDP value to integer
         },
     };
 };
