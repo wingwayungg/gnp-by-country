@@ -1,8 +1,7 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import _ from "lodash";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Col, Row } from "react-bootstrap";
 import { CountryTable } from "@components/table/CountryTable";
 import { Pages } from "@components/pagination/Pages";
 import { Form } from "@components/form/Form";

@@ -1,7 +1,6 @@
 import route, { useRouter } from "next/router";
 import { FC, FormEvent, useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Stack from "react-bootstrap/Stack";
+import { Button, Stack } from "react-bootstrap";
 import { InputEnum } from "@type/inputType";
 import styles from "./Form.module.scss";
 
