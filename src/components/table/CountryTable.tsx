@@ -5,7 +5,7 @@ import { FC } from "react";
 import Stack from "react-bootstrap/Stack";
 import { CountryType } from "@type/countryType";
 import { OrderByEnum } from "@type/sortType";
-import { Arrow } from "./Arrow";
+import { CountryTableArrow } from "./CountryTableArrow";
 import styles from "./CountryTable.module.scss";
 
 const myLoader = ({ src }) => `https://countryflagsapi.com/svg/${src}`;
@@ -29,7 +29,7 @@ export const CountryTable: FC<CountryTableType> = ({ countries }) => {
         >
             <a className="d-flex">
                 {text}
-                <Arrow type={type} />
+                <CountryTableArrow type={type} />
             </a>
         </Link>
     );
