@@ -8,8 +8,6 @@ import { OrderByEnum } from "@type/sortType";
 import { CountryTableArrow } from "./CountryTableArrow";
 import styles from "./CountryTable.module.scss";
 
-const myLoader = ({ src }) => `https://countryflagsapi.com/svg/${src}`;
-
 interface CountryTableType {
     countries: CountryType[];
 }
@@ -44,7 +42,7 @@ export const CountryTable: FC<CountryTableType> = ({ countries }) => {
                 <>
                     {countries?.map((country, index) => (
                         <Stack className="w-100 px-3 py-3 border border-light border-2 rounded-3" direction="horizontal" key={index}>
-                            <Image loader={myLoader} src={country?.country?.id} alt="country flag" width={50} height={30} priority />
+                            <Image src={`https://countryflagsapi.com/svg/${country?.country?.id}`} alt="country flag" width={50} height={30} priority />
                             <span className="ms-2 me-auto">{country?.country?.value}</span>
                             <span className={`${styles.tabularNumbersEqualWidth}`}>{country?.value ?? 0}</span>
                         </Stack>
