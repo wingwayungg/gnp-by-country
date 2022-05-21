@@ -16,12 +16,14 @@ interface CountryTableType {
 
 export const CountryTable: FC<CountryTableType> = ({ countries }) => {
     const router = useRouter();
-    const orderAsc = router.query.orderAsc === "true";
+    const { pathname, query } = router;
+    const isOrderAsc = query.orderAsc === "true";
+
     const button = (type: `${OrderByEnum}`, text: string) => (
         <Link
             href={{
-                pathname: router.pathname,
-                query: { ...router.query, orderBy: type, orderAsc: !orderAsc, page: 1 },
+                pathname,
+                query: { ...query, orderBy: type, orderAsc: !isOrderAsc, page: 1 },
             }}
             shallow
         >
@@ -31,6 +33,7 @@ export const CountryTable: FC<CountryTableType> = ({ countries }) => {
             </a>
         </Link>
     );
+
     return (
         <div className="overflow-scroll rounded-5 border border-2 rounded" style={{ height: 500 }}>
             <Stack className="justify-content-between px-3 py-3 border border-light border-2 rounded-3" direction="horizontal">
