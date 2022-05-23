@@ -11,6 +11,8 @@ This is a simple website, listing the Gross National Product(GNP) per person emp
 
   - **React hook Memoization**. The webpage allows user to search by page and filter by keywords. The last search result is memorized, and when users change pages, the list will not be filtered again.
 
+  - **Pagination**. The search result is recorded in the URL. This enable user to reload, store and share the search result using the URL link.
+
 ## Quality Control
 Lighthouse serve as an excellent tool to measure and ensure the quality of the webpage. 
 <br />
