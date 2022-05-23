@@ -1,8 +1,8 @@
 # GNP per person employed
 This is a simple website, listing the Gross National Product(GNP) per person employed of each country in the year 2020. The data is taken from [WorldBank](https://data.worldbank.org/indicator/SL.GDP.PCAP.EM.KD?end=2020&view=map). This webpage has two main purposes. First, the CNP per capita is widely discussed around the world, while the data of GNP per person employed is often overlooked. Second, this project serves as an exercise to practice my favourite framework - Next.js! The features of this project include:
   - searching by keywords
-  - filtering by range of GDP
-  - sorting by name or value of GDP
+  - filtering by GNP
+  - sorting by name or value of GNP
   - pagination
   - dark mode (upcoming)
 
