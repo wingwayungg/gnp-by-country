@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { FC } from "react";
 import Stack from "react-bootstrap/Stack";
+import useQueryAction from "@hook/useQueryAction";
 import { CountryType } from "@type/countryType";
 import { OrderByEnum } from "@type/sortType";
 import { CountryTableArrow } from "./CountryTableArrow";
@@ -13,18 +13,10 @@ interface CountryTableType {
 }
 
 export const CountryTable: FC<CountryTableType> = ({ countries }) => {
-    const router = useRouter();
-    const { pathname, query } = router;
-    const isOrderAsc = query.orderAsc === "true";
+    const { sortLinkProp } = useQueryAction();
 
     const button = (type: `${OrderByEnum}`, text: string) => (
-        <Link
-            href={{
-                pathname,
-                query: { ...query, orderBy: type, orderAsc: !isOrderAsc, page: 1 },
-            }}
-            shallow
-        >
+        <Link {...sortLinkProp(type)}>
             <a className="d-flex">
                 {text}
                 <CountryTableArrow type={type} />

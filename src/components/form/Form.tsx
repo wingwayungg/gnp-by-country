@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 import { Button, Form, Stack } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import useQueryAction from "@hook/useQueryAction";
 import { FormType } from "@type/formType";
 import styles from "./Form.module.scss";
 
@@ -12,12 +13,12 @@ const defaultValues: FormType = {
 };
 
 export const FormComponent: FC = () => {
-    const { register, reset, handleSubmit } = useForm<FormType>({
+    const { register, reset, handleSubmit: onSubmit } = useForm<FormType>({
         defaultValues,
     });
+
     const router = useRouter();
     const { country, greaterThan, lessThan } = router.query;
-
     useEffect(() => {
         reset({
             country: (country as string) || "",
@@ -26,13 +27,10 @@ export const FormComponent: FC = () => {
         });
     }, [router]);
 
-    const onSubmit = (data: FormType) => {
-        const dataToURL = Object.fromEntries(Object.entries(data).filter(([_, v]) => v != ""));
-        router.push({ pathname: router.pathname, query: { ...router.query, ...dataToURL, page: 1 } }, undefined, { shallow: true });
-    };
+    const { handleReset, handleSubmit } = useQueryAction();
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={onSubmit(handleSubmit)}>
             <Form.Group controlId="country" className="mb-3">
                 <Form.Label>Country Name</Form.Label>
                 <Form.Control type="text" className={inputClassName} placeholder="Country" {...register("country")} />
@@ -51,7 +49,7 @@ export const FormComponent: FC = () => {
                     Search
                 </Button>
                 {/* <button className={`btn btn-secondary ${styles.button}`}/> */}
-                <Button className={styles.button} variant="secondary" onClick={() => router.push(router.pathname, undefined, { shallow: true })}>
+                <Button className={styles.button} variant="secondary" onClick={handleReset}>
                     Reset
                 </Button>
             </Stack>
