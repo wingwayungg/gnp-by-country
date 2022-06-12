@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Col, Row } from "react-bootstrap";
 import { CountryTable } from "@components/table/CountryTable";
 import { Pages } from "@components/pagination/Pages";
-import { Form } from "@components/form/Form";
+import { FormComponent } from "@components/form/Form";
 import useCountryFilterData from "@hook/useCountryFilterData";
 import { CountryType } from "@type/countryType";
 
@@ -20,7 +20,7 @@ export default function Home({ data }: { data: CountryType[] }) {
                 <Row className="gap-3 gap-md-0 mb-3">
                     {/* <div className="col-12 col-md-6"><Form/></div> */}
                     <Col xs={12} md={6}>
-                        <Form />
+                        <FormComponent />
                     </Col>
                     {/* <div className="col-12 col-md-6 order-md-first"><CountryTable/></div> */}
                     <Col xs={12} md={{ span: 6, order: "first" }}>

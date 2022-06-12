@@ -1,54 +1,53 @@
-import route, { useRouter } from "next/router";
-import { FC, FormEvent, useEffect, useState } from "react";
-import { Button, Stack } from "react-bootstrap";
-import { InputEnum } from "@type/inputType";
+import { useRouter } from "next/router";
+import { FC, useEffect } from "react";
+import { Button, Form, Stack } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { FormType } from "@type/formType";
 import styles from "./Form.module.scss";
 
-export const Form: FC = () => {
-    const router = useRouter();
-    const [country, setCountry] = useState<string>("");
-    const [greaterThan, setGreaterThan] = useState<number | "">("");
-    const [lessThan, setLessThan] = useState<number | "">("");
+const defaultValues: FormType = {
+    country: "",
+    greaterThan: "",
+    lessThan: "",
+};
 
-    const inputOnChange = (e: FormEvent<HTMLInputElement>, type: InputEnum) => {
-        const target = e.target as HTMLInputElement;
-        if (type === InputEnum.Country) {
-            setCountry(target.value);
-        } else if (type === InputEnum.Greater) {
-            setGreaterThan(parseInt(target.value));
-        } else {
-            setLessThan(parseInt(target.value));
-        }
-    };
-    const searchResult = { ...(country && { country }), ...(greaterThan && { greaterThan }), ...(lessThan && { lessThan }) };
+export const FormComponent: FC = () => {
+    const { register, reset, handleSubmit } = useForm<FormType>({
+        defaultValues,
+    });
+    const router = useRouter();
+    const { country, greaterThan, lessThan } = router.query;
 
     useEffect(() => {
-        setCountry((route.query.country as string) || "");
-        setGreaterThan(Number(route.query.greaterThan) || "");
-        setLessThan(Number(route.query.lessThan) || "");
+        reset({
+            country: (country as string) || "",
+            greaterThan: Number(greaterThan) || "",
+            lessThan: Number(lessThan) || "",
+        });
     }, [router]);
 
+    const onSubmit = (data: FormType) => {
+        const dataToURL = Object.fromEntries(Object.entries(data).filter(([_, v]) => v != ""));
+        router.push({ pathname: router.pathname, query: { ...router.query, ...dataToURL, page: 1 } }, undefined, { shallow: true });
+    };
+
     return (
-        <>
-            {label(InputEnum.Country, "Country Name")}
-            {input(InputEnum.Country, "Country", "text", country, (e: FormEvent<HTMLInputElement>) => {
-                inputOnChange(e, InputEnum.Country);
-            })}
-            <VerticalSpace />
-            {label(InputEnum.Greater, "GNP per Capital")}
-            <Stack className="justify-content-between justify-content-md-start" direction="horizontal" gap={3}>
-                {input(InputEnum.Greater, "Greater than", "number", greaterThan, (e: FormEvent<HTMLInputElement>) => {
-                    inputOnChange(e, InputEnum.Greater);
-                })}
-                <span>-</span>
-                {input(InputEnum.Less, "Smaller than", "number", lessThan, (e: FormEvent<HTMLInputElement>) => {
-                    inputOnChange(e, InputEnum.Less);
-                })}
-            </Stack>
-            <VerticalSpace />
+        <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form.Group controlId="country" className="mb-3">
+                <Form.Label>Country Name</Form.Label>
+                <Form.Control type="text" className={inputClassName} placeholder="Country" {...register("country")} />
+            </Form.Group>
+            <Form.Group controlId="greater" className="mb-3">
+                <Form.Label>GNP per Capital</Form.Label>
+                <Stack className="justify-content-between justify-content-md-start" direction="horizontal" gap={3}>
+                    <Form.Control type="number" className={inputClassName} placeholder="Greater than" {...register("greaterThan")} />
+                    <span>-</span>
+                    <Form.Control type="number" className={inputClassName} placeholder="Smaller than" {...register("lessThan")} />
+                </Stack>
+            </Form.Group>
             <Stack className="justify-content-between justify-content-md-start" direction="horizontal" gap={3}>
                 {/* <button className={`btn btn-primary ${styles.button}`}/> */}
-                <Button className={styles.button} variant="primary" onClick={() => router.push({ pathname: router.pathname, query: { ...router.query, ...searchResult, page: 1 } }, undefined, { shallow: true })}>
+                <Button className={styles.button} variant="primary" type="submit">
                     Search
                 </Button>
                 {/* <button className={`btn btn-secondary ${styles.button}`}/> */}
@@ -56,15 +55,8 @@ export const Form: FC = () => {
                     Reset
                 </Button>
             </Stack>
-        </>
+        </Form>
     );
 };
 
-const label = (htmlFor: string, text: string) => (
-    <label htmlFor={htmlFor} className="form-label d-block mb-2">
-        {text}
-    </label>
-);
-const input = (id: string, placeholder: string, type: "text" | "number", value: string | number, onChange: (e: FormEvent<HTMLInputElement>) => void) => <input type={type} className="px-3 py-2 rounded-3 w-100 w-md-auto" id={id} placeholder={placeholder} value={value} onChange={onChange} />;
-
-const VerticalSpace = () => <div className="mb-3" />;
+const inputClassName = "px-3 py-2 rounded-3 w-100 w-md-auto";
