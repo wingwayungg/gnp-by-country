@@ -9,9 +9,11 @@ This is a simple website, listing the Gross National Product(GNP) per person emp
 ## Technical Features
   - **Static-site Generation (SSG)**. The GNP figures in 2020 are a past record, and are therefore static. The data is firstly fetched through WorldBank API, and the site is pre-renderd at build time. The users need not to wait when entering the webpage as the table is already loaded. This techniques also benefit the page for Search Engine Optimization (SEO). While users searchs for this webpage in google, the data rather than the word "No Result" will be displayed on the search result page.
 
-  - **React hook Memoization**. The webpage allows users to search by page and filter by keywords. The last search result is memorized, and when users change pages, the list will not be filtered again.
+  - **React hook Memoization**. The webpage allows users to change page quickly with the help of built-in useMemo hook. The current search result list is stored as React state. When users change pages by clicking the pagination items, instead of sorting or filtering the entire list again, the result could be retrieved by returning a different index from the current search result list.
 
   - **Pagination**. The search results are recorded in the URL. This enables users to reload, store and share the search results using URL links.
+
+  - **Form Optimization**. An external library react-hook-form is used to optimize the form performance. The form is built with uncontrolled components and does not re-render when the user types in the input fields.
 
 ## Quality Control
 Lighthouse serve as an excellent tool to measure and ensure the quality of the webpage. 
@@ -20,7 +22,7 @@ Lighthouse serve as an excellent tool to measure and ensure the quality of the w
 
 
 ## Programming Languages
-The languages I used is React, TypeScript, Scss under Next.js framework. The site is also developed with the help of additional libraries including Bootstrap, React-Bootstrap and Ramda.
+The languages I used is React, TypeScript, Scss under Next.js framework. The site is also developed with the help of additional libraries including Bootstrap, React-Bootstrap, React-hook-form and Ramda.
 
 ## Deployment
 Please visit https://gnp-by-country.wingwayung.com/
