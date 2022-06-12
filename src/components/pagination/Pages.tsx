@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import useQueryAction from "@hook/useQueryAction";
 
@@ -8,7 +8,8 @@ export const Pages = ({ totalPage }) => {
 
     const router = useRouter();
     const { query } = router;
-    const { handlePageChange } = useQueryAction();
+    const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
+    const handlePageChange = (page: number) => dispatchQuery({ type: ACTIONS_QUERY.CHANGE_PAGE, payload: { page: page } });
 
     const currentPage = Number(query.page) || 1;
 

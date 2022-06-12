@@ -13,13 +13,13 @@ const defaultValues: FormType = {
 };
 
 export const FormComponent: FC = () => {
-    const { register, reset, handleSubmit: onSubmit } = useForm<FormType>({
+    const { register, reset, handleSubmit } = useForm<FormType>({
         defaultValues,
     });
 
     const router = useRouter();
-    const { country, greaterThan, lessThan } = router.query;
     useEffect(() => {
+        const { country, greaterThan, lessThan } = router.query;
         reset({
             country: (country as string) || "",
             greaterThan: Number(greaterThan) || "",
@@ -27,10 +27,10 @@ export const FormComponent: FC = () => {
         });
     }, [router]);
 
-    const { handleReset, handleSubmit } = useQueryAction();
+    const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
 
     return (
-        <Form onSubmit={onSubmit(handleSubmit)}>
+        <Form onSubmit={handleSubmit((data: FormType) => dispatchQuery({ type: ACTIONS_QUERY.SUBMIT, payload: data }))}>
             <Form.Group controlId="country" className="mb-3">
                 <Form.Label>Country Name</Form.Label>
                 <Form.Control type="text" className={inputClassName} placeholder="Country" {...register("country")} />
@@ -49,7 +49,7 @@ export const FormComponent: FC = () => {
                     Search
                 </Button>
                 {/* <button className={`btn btn-secondary ${styles.button}`}/> */}
-                <Button className={styles.button} variant="secondary" onClick={handleReset}>
+                <Button className={styles.button} variant="secondary" onClick={() => dispatchQuery({ type: ACTIONS_QUERY.RESET })}>
                     Reset
                 </Button>
             </Stack>
