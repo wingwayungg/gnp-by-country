@@ -1,4 +1,6 @@
-import { useRouter } from "next/router";
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import { FC, useEffect } from "react";
 import { Button, Form, Stack } from "react-bootstrap";
 import { useForm } from "react-hook-form";
@@ -17,15 +19,17 @@ export const FormComponent: FC = () => {
         defaultValues,
     });
 
-    const router = useRouter();
+    const searchParams = useSearchParams();
     useEffect(() => {
-        const { country, greaterThan, lessThan } = router.query;
+        const country = searchParams.get("country");
+        const greaterThan = searchParams.get("greaterThan");
+        const lessThan = searchParams.get("lessThan");
         reset({
             country: (country as string) || "",
             greaterThan: Number(greaterThan) || "",
             lessThan: Number(lessThan) || "",
         });
-    }, [router]);
+    }, [searchParams]);
 
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
 

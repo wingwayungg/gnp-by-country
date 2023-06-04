@@ -1,12 +1,17 @@
 import { useMemo } from "react";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { CountryType } from "@type/countryType";
 import * as R from "ramda";
 
 const no_display = 10;
 const useCountryFilterData = (data: CountryType[]) => {
-    const router = useRouter();
-    const { country, greaterThan, lessThan, orderAsc, orderBy, page } = router.query;
+    const searchParams = useSearchParams();
+    const country = searchParams.get('country');
+    const greaterThan = searchParams.get('greaterThan');
+    const lessThan = searchParams.get('lessThan');
+    const orderAsc = searchParams.get('orderAsc');
+    const orderBy = searchParams.get('orderBy');
+    const page = searchParams.get('page');
 
     const dataFiltered = useMemo(() => {
         const filter_By_Country = R.when(
@@ -16,6 +21,7 @@ const useCountryFilterData = (data: CountryType[]) => {
         const filter_By_GreaterThan = R.when<CountryType[], CountryType[]>(() => !R.isNil(greaterThan), R.filter(R.propSatisfies((x: number) => x >= Number(greaterThan), "value")));
         const filter_By_LessThan = R.when<CountryType[], CountryType[]>(() => !R.isNil(lessThan), R.filter(R.propSatisfies((x: number) => x <= Number(lessThan), "value")));
         const order = orderAsc === "true" ? R.ascend : R.descend;
+        // @ts-ignore
         const sortByKey: (obj: any) => R.Ord = R.path(orderBy === "name" ? ["country", "value"] : ["value"]);
         const sortBy = R.sort(order(sortByKey));
         const filter = R.compose<CountryType[][], CountryType[], CountryType[], CountryType[], CountryType[]>(sortBy, filter_By_Country, filter_By_GreaterThan, filter_By_LessThan);

@@ -17,7 +17,7 @@ module.exports = {
             "@fullhuman/postcss-purgecss",
             {
                 content: [
-                    "./pages/**/*.{js,jsx,ts,tsx}",
+                    "./app/*.{js,jsx,ts,tsx}",
                     "./src/**/**/*.{js,jsx,ts,tsx}",
                     "./node_modules/react-bootstrap/cjs/Button.js",
                     "./node_modules/react-bootstrap/cjs/PageItem.js",

@@ -4,6 +4,13 @@ module.exports = {
         // Reference: https://nextjs.org/docs/api-reference/next/image#dangerously-allow-svg
         dangerouslyAllowSVG: true,
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-        domains: ["countryflagsapi.com"],
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "flagsapi.com",
+                port: "",
+                pathname: "/**",
+            },
+        ],
     },
 };

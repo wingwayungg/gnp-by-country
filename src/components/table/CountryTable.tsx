@@ -1,4 +1,6 @@
-import Image from "next/image";
+"use client";
+
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { FC } from "react";
 import Stack from "react-bootstrap/Stack";
@@ -16,11 +18,9 @@ export const CountryTable: FC<CountryTableType> = ({ countries }) => {
     const { sortLinkProp } = useQueryAction();
 
     const button = (type: `${OrderByEnum}`, text: string) => (
-        <Link {...sortLinkProp(type)}>
-            <div className="d-flex">
-                {text}
-                <CountryTableArrow type={type} />
-            </div>
+        <Link {...sortLinkProp(type)} replace className="d-flex">
+            {text}
+            <CountryTableArrow type={type} />
         </Link>
     );
 
@@ -34,7 +34,7 @@ export const CountryTable: FC<CountryTableType> = ({ countries }) => {
                 <>
                     {countries?.map((country, index) => (
                         <Stack className="px-3 py-3 border border-light border-2 rounded-3" direction="horizontal" key={index}>
-                            <Image src={`https://countryflagsapi.com/svg/${country?.country?.id}`} alt="country flag" width={50} height={30} priority />
+                            <Image src={`https://flagsapi.com/${country?.country?.id}/flat/64.png`} alt="country flag" width={50} height={50} priority />
                             <span className="ms-2 me-auto">{country?.country?.value}</span>
                             <span className={styles.tabularNumbersEqualWidth}>{country?.value ?? 0}</span>
                         </Stack>

@@ -1,4 +1,6 @@
-import { useRouter } from "next/router";
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import useQueryAction from "@hook/useQueryAction";
@@ -6,12 +8,11 @@ import useQueryAction from "@hook/useQueryAction";
 export const Pages = ({ totalPage }) => {
     if (totalPage <= 1) return <></>;
 
-    const router = useRouter();
-    const { query } = router;
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
     const handlePageChange = (page: number) => dispatchQuery({ type: ACTIONS_QUERY.CHANGE_PAGE, payload: { page: page } });
 
-    const currentPage = Number(query.page) || 1;
+    const searchParams = useSearchParams();
+    const currentPage = Number(searchParams.get("page")) || 1;
 
     // the page no. showed on the leftmost button
     const [leftMostPage, setLeftMostPage] = useState(currentPage);
@@ -24,7 +25,7 @@ export const Pages = ({ totalPage }) => {
 
     useEffect(() => {
         if (currentPage != leftMostPage && currentPage != leftMostPage + 1) setLeftMostPage(currentPage);
-    }, [router]);
+    }, [searchParams]);
 
     return (
         <Pagination className="justify-content-center justify-content-md-start">
