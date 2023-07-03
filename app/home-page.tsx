@@ -7,7 +7,7 @@ import { Pages } from "@components/pagination/Pages";
 import { FormComponent } from "@components/form/Form";
 import useCountryFilterData from "@hook/useCountryFilterData";
 
-export default function HomePage({ data }: any) {
+export default function HomePage({ data }) {
     const { dataDisplayed, totalPage } = useCountryFilterData(data);
     return (
         <>

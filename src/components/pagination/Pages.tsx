@@ -9,7 +9,7 @@ export const Pages = ({ totalPage }) => {
     if (totalPage <= 1) return <></>;
 
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
-    const handlePageChange = (page: number) => dispatchQuery({ type: ACTIONS_QUERY.CHANGE_PAGE, payload: { page: page } });
+    const handlePageChange = (page: number) => dispatchQuery({ type: ACTIONS_QUERY.CHANGE_PAGE, payload: { page } });
 
     const searchParams = useSearchParams();
     const currentPage = Number(searchParams.get("page")) || 1;
@@ -25,7 +25,7 @@ export const Pages = ({ totalPage }) => {
 
     useEffect(() => {
         if (currentPage != leftMostPage && currentPage != leftMostPage + 1) setLeftMostPage(currentPage);
-    }, [searchParams]);
+    }, [currentPage]);
 
     return (
         <Pagination className="justify-content-center justify-content-md-start">
