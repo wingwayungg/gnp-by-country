@@ -20,7 +20,7 @@ type ACTIONTYPE = {
 
 const queryReducer = (searchParams: ReadonlyURLSearchParams, action: ACTIONTYPE): URLSearchParams => {
     const { type, payload: { orderAsc, orderBy, page } = {} } = action;
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams.toString());
     switch (type) {
         case ACTIONS_QUERY.CHANGE_PAGE:
             params.set('page', page!.toString());
@@ -61,7 +61,6 @@ const useQueryAction = () => {
             pathname,
             query: Object.fromEntries(queryReducer(searchParams, { type: ACTIONS_QUERY.SORT, payload: { orderBy, orderAsc: searchParams.get('orderAsc') !== "true" } })),
         },
-        shallow: true,
     });
 
     return { ACTIONS_QUERY, dispatchQuery, sortLinkProp };

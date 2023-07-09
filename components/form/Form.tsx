@@ -1,5 +1,3 @@
-"use client";
-
 import { useSearchParams } from "next/navigation";
 import { FC, useEffect } from "react";
 import { Button, Form, Stack } from "react-bootstrap";

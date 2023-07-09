@@ -21,16 +21,13 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": [
-        "src/components/*"
+        "components/*"
       ],
       "@hook/*": [
-        "src/hook/*"
+        "lib/hook/*"
       ],
       "@type/*": [
-        "src/type/*"
-      ],
-      "@styles/*": [
-        "styles/*"
+        "lib/type/*"
       ]
     },
     "plugins": [

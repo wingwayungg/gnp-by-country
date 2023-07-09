@@ -1,11 +1,13 @@
-"use client";
-
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import useQueryAction from "@hook/useQueryAction";
 
-export const Pages = ({ totalPage }) => {
+interface PaginationComponentType {
+    totalPage: number;
+}
+
+export const PaginationComponent: FC<PaginationComponentType> = ({ totalPage }) => {
     if (totalPage <= 1) return <></>;
 
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();

@@ -3,11 +3,13 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { CountryTable } from "@components/table/CountryTable";
-import { Pages } from "@components/pagination/Pages";
+import { useSearchParams } from "next/navigation";
+import { PaginationComponent } from "@components/pagination/PaginationComponent";
 import { FormComponent } from "@components/form/Form";
 import useCountryFilterData from "@hook/useCountryFilterData";
 
-export default function HomePage({ data }) {
+export default function HomePageClient({ data }) {
+    const searchParams = useSearchParams();
     const { dataDisplayed, totalPage } = useCountryFilterData(data);
     return (
         <>
@@ -21,7 +23,7 @@ export default function HomePage({ data }) {
                     <CountryTable countries={dataDisplayed} />
                 </Col>
             </Row>
-            <Pages totalPage={totalPage} />
+            <PaginationComponent totalPage={totalPage} />
         </>
     );
 }

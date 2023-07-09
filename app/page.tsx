@@ -1,8 +1,9 @@
 import Head from "next/head";
-import HomePage from "./home-page";
+import { Suspense } from "react";
+import HomePageClient from "@components/home-page-client";
 import { CountryType } from "@type/countryType";
 
-export async function getData() {
+async function getData() {
     const resultArray = await fetch("https://api.worldbank.org/v2/country/all/indicator/SL.GDP.PCAP.EM.KD?format=json&date=2020&per_page=266").then((res) => res.json());
     return resultArray?.[1]
         ?.slice(49)
@@ -10,7 +11,7 @@ export async function getData() {
         ?.map((o: CountryType) => ({ ...o, value: Math.trunc(o.value) })); // truncate GDP value to integer
 }
 
-export default async function Page({ searchParams }) {
+export default async function Page() {
     const data = await getData();
     return (
         <>
@@ -20,7 +21,9 @@ export default async function Page({ searchParams }) {
             </Head>
             <div className="px-5">
                 <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
-                <HomePage data={data} />
+                <Suspense>
+                    <HomePageClient data={data} />
+                </Suspense>
             </div>
         </>
     );
