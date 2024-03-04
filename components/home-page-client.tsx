@@ -3,13 +3,15 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { CountryTable } from "@components/table/CountryTable";
-import { useSearchParams } from "next/navigation";
 import { PaginationComponent } from "@components/pagination/PaginationComponent";
 import { FormComponent } from "@components/form/Form";
 import useCountryFilterData from "@hook/useCountryFilterData";
 
-export default function HomePageClient({ data }) {
-    const searchParams = useSearchParams();
+interface HomePageType {
+    data: any;
+}
+
+export default function HomePageClient({ data }: Readonly<HomePageType>) {
     const { dataDisplayed, totalPage } = useCountryFilterData(data);
     return (
         <>

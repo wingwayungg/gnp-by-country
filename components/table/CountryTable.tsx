@@ -1,5 +1,6 @@
 import Image from "next/legacy/image";
 import React, { FC } from "react";
+import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import { useSearchParams } from "next/navigation";
 import useQueryAction from "@hook/useQueryAction";
@@ -17,10 +18,10 @@ export const CountryTable: FC<CountryTableType> = ({ countries }) => {
     const searchParams = useSearchParams();
 
     const button = (type: `${OrderByEnum}`, text: string) => (
-        <div onClick={() => dispatchQuery({ type: ACTIONS_QUERY.SORT, payload: { orderBy: type, orderAsc: searchParams.get("orderAsc") !== "true" } })} className="d-flex">
+        <Button onClick={() => dispatchQuery({ type: ACTIONS_QUERY.SORT, payload: { orderBy: type, orderAsc: searchParams.get("orderAsc") !== "true" } })} size="sm" variant="primary" className="d-flex align-items-center">
             {text}
             <CountryTableArrow type={type} />
-        </div>
+        </Button>
     );
 
     return (

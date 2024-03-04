@@ -19,13 +19,13 @@
     ],
     "paths": {
       "@components/*": [
-        "components/*"
+        "./components/*"
       ],
       "@hook/*": [
-        "lib/hook/*"
+        "./lib/hook/*"
       ],
       "@type/*": [
-        "lib/type/*"
+        "./lib/type/*"
       ]
     },
   },

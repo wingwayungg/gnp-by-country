@@ -18,5 +18,5 @@ export const CountryTableArrow: FC<CountryTableArrowType> = ({ type }) => {
     const showArrowCase2 = orderBy === type;
 
     if (!showArrowCase1 && !showArrowCase2) return <></>;
-    return <Image src="/images/arrow-up.svg" alt="me" width="20" height="30" className={orderAsc === "true" ? "" : "rotate180"} />;
+    return <Image src="/images/arrow-up.svg" alt="me" width="27" height="27" className={orderAsc === "true" ? "" : "rotate180"} />;
 };
