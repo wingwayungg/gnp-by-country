@@ -1,7 +1,7 @@
 import Image from "next/legacy/image";
-import Link from "next/link";
-import { FC } from "react";
+import React, { FC } from "react";
 import Stack from "react-bootstrap/Stack";
+import { useSearchParams } from "next/navigation";
 import useQueryAction from "@hook/useQueryAction";
 import { CountryType } from "@type/countryType";
 import { OrderByEnum } from "@type/sortType";
@@ -13,13 +13,14 @@ interface CountryTableType {
 }
 
 export const CountryTable: FC<CountryTableType> = ({ countries }) => {
-    const { sortLinkProp } = useQueryAction();
+    const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
+    const searchParams = useSearchParams();
 
     const button = (type: `${OrderByEnum}`, text: string) => (
-        <Link {...sortLinkProp(type)} replace className="d-flex">
+        <div onClick={() => dispatchQuery({ type: ACTIONS_QUERY.SORT, payload: { orderBy: type, orderAsc: searchParams.get("orderAsc") !== "true" } })} className="d-flex">
             {text}
             <CountryTableArrow type={type} />
-        </Link>
+        </div>
     );
 
     return (

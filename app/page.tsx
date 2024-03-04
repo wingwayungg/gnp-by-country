@@ -1,5 +1,5 @@
-import Head from "next/head";
-import { Suspense } from "react";
+import { Metadata } from "next";
+import React, { Suspense } from "react";
 import HomePageClient from "@components/home-page-client";
 import { CountryType } from "@type/countryType";
 
@@ -11,20 +11,19 @@ async function getData() {
         ?.map((o: CountryType) => ({ ...o, value: Math.trunc(o.value) })); // truncate GDP value to integer
 }
 
+export const metadata: Metadata = {
+    title: "My Page Title",
+    description: "List of GDP per person employed of each country in year 2020.",
+};
+
 export default async function Page() {
     const data = await getData();
     return (
-        <>
-            <Head>
-                <title>GDP per person employed</title>
-                <meta name="description" content="List of GDP per person employed of each country in year 2020."></meta>
-            </Head>
-            <div className="px-5">
-                <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
-                <Suspense>
-                    <HomePageClient data={data} />
-                </Suspense>
-            </div>
-        </>
+        <div className="px-5">
+            <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
+            <Suspense>
+                <HomePageClient data={data} />
+            </Suspense>
+        </div>
     );
 }

@@ -1,4 +1,4 @@
-import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { FormType } from "@type/formType";
 import { OrderByEnum } from "@type/sortType";
 
@@ -9,7 +9,7 @@ enum ACTIONS_QUERY {
     SUBMIT = "submit",
 }
 
-type ACTIONTYPE = {
+type ActionType = {
     type: ACTIONS_QUERY;
     payload?: {
         orderAsc?: boolean;
@@ -18,7 +18,7 @@ type ACTIONTYPE = {
     } & Partial<FormType>;
 };
 
-const queryReducer = (searchParams: ReadonlyURLSearchParams, action: ACTIONTYPE): URLSearchParams => {
+const queryReducer = (searchParams: ReadonlyURLSearchParams, action: ActionType): URLSearchParams => {
     const { type, payload: { orderAsc, orderBy, page } = {} } = action;
     const params = new URLSearchParams(searchParams.toString());
     switch (type) {
@@ -50,20 +50,11 @@ const queryReducer = (searchParams: ReadonlyURLSearchParams, action: ACTIONTYPE)
 };
 
 const useQueryAction = () => {
-    const router = useRouter();
-    const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const dispatchQuery = (action: ACTIONTYPE) => router.replace(`${pathname}?${queryReducer(searchParams, action).toString()}`);
+    const dispatchQuery = (action: ActionType) => window.history.pushState(null, '', `?${queryReducer(searchParams, action).toString()}`);
 
-    const sortLinkProp = (orderBy: `${OrderByEnum}`) => ({
-        href: {
-            pathname,
-            query: Object.fromEntries(queryReducer(searchParams, { type: ACTIONS_QUERY.SORT, payload: { orderBy, orderAsc: searchParams.get('orderAsc') !== "true" } })),
-        },
-    });
-
-    return { ACTIONS_QUERY, dispatchQuery, sortLinkProp };
+    return { ACTIONS_QUERY, dispatchQuery };
 };
 
 export default useQueryAction;
