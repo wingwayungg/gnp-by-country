@@ -1,33 +1,20 @@
 import { useSearchParams } from "next/navigation";
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { Button, Form, Stack } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import useQueryAction from "@hook/useQueryAction";
 import { FormType } from "@type/formType";
 import styles from "./Form.module.scss";
 
-const defaultValues: FormType = {
-    country: "",
-    greaterThan: "",
-    lessThan: "",
-};
-
 export const FormComponent: FC = () => {
-    const { register, reset, handleSubmit } = useForm<FormType>({
-        defaultValues,
-    });
-
     const searchParams = useSearchParams();
-    useEffect(() => {
-        const country = searchParams.get("country");
-        const greaterThan = searchParams.get("greaterThan");
-        const lessThan = searchParams.get("lessThan");
-        reset({
-            country: (country as string) || "",
-            greaterThan: Number(greaterThan) || "",
-            lessThan: Number(lessThan) || "",
-        });
-    }, [reset, searchParams]);
+    const { register, handleSubmit } = useForm<FormType>({
+        defaultValues: {
+            country: searchParams.get("country") ?? "",
+            greaterThan: Number(searchParams.get("greaterThan")) || "",
+            lessThan: Number(searchParams.get("lessThan")) || "",
+        },
+    });
 
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
 
