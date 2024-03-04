@@ -1,14 +1,21 @@
 import { Metadata } from "next";
-import React, { Suspense } from "react";
+import React from "react";
 import HomePageClient from "@components/home-page-client";
 import { CountryType } from "@type/countryType";
 
-async function getData() {
-    const resultArray = await fetch("https://api.worldbank.org/v2/country/all/indicator/SL.GDP.PCAP.EM.KD?format=json&date=2020&per_page=266").then((res) => res.json());
-    return resultArray?.[1]
-        ?.slice(49)
-        ?.filter((o: CountryType) => o?.value) // get only countries that have GNP data
-        ?.map((o: CountryType) => ({ ...o, value: Math.trunc(o.value) })); // truncate GDP value to integer
+async function getCountryGDP() {
+    return fetch("https://api.worldbank.org/v2/country/all/indicator/SL.GDP.PCAP.EM.KD?format=json&date=2020&per_page=266")
+        .then((res) => res.json())
+        .then(
+            (data) =>
+                data?.[1]
+                    ?.slice(49)
+                    ?.filter((o: CountryType) => o?.value) // get only countries that have GNP data
+                    ?.map((o: CountryType) => ({ ...o, value: Math.trunc(o.value) })) // truncate GDP value to integer
+        )
+        .catch(() => {
+            return []; // in case of error when fetching the API
+        });
 }
 
 export const metadata: Metadata = {
@@ -17,13 +24,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-    const data = await getData();
+    const countryGDPData = await getCountryGDP();
     return (
         <div className="px-5">
             <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
-            <Suspense>
-                <HomePageClient data={data} />
-            </Suspense>
+            <HomePageClient data={countryGDPData} />
         </div>
     );
 }
