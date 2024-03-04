@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { FC, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { Button, Form, Stack } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import useQueryAction from "@hook/useQueryAction";

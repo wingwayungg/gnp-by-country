@@ -19,7 +19,6 @@ module.exports = {
                 content: [
                     "./app/*.{js,jsx,ts,tsx}",
                     "./components/**/*.{js,jsx,ts,tsx}",
-                    "./components/form/*.{js,jsx,ts,tsx}",
                     "./node_modules/react-bootstrap/cjs/Button.js",
                     "./node_modules/react-bootstrap/cjs/PageItem.js",
                     "./node_modules/react-bootstrap/cjs/Pagination.js",
