@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import useQueryAction from "@hook/useQueryAction";
 
@@ -8,8 +8,6 @@ interface PaginationComponentType {
 }
 
 export const PaginationComponent: FC<PaginationComponentType> = ({ totalPage }) => {
-    if (totalPage <= 1) return <></>;
-
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
     const handlePageChange = (page: number) => dispatchQuery({ type: ACTIONS_QUERY.CHANGE_PAGE, payload: { page } });
 
@@ -27,7 +25,10 @@ export const PaginationComponent: FC<PaginationComponentType> = ({ totalPage }) 
 
     useEffect(() => {
         if (currentPage != leftMostPage && currentPage != leftMostPage + 1) setLeftMostPage(currentPage);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
+
+    if (totalPage <= 1) return <></>;
 
     return (
         <Pagination className="justify-content-center justify-content-md-start">

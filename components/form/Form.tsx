@@ -27,7 +27,7 @@ export const FormComponent: FC = () => {
             greaterThan: Number(greaterThan) || "",
             lessThan: Number(lessThan) || "",
         });
-    }, [searchParams]);
+    }, [reset, searchParams]);
 
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
 
