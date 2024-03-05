@@ -6,9 +6,10 @@ import { CountryTable } from "@components/table/CountryTable";
 import { PaginationComponent } from "@components/pagination/PaginationComponent";
 import { FormComponent } from "@components/form/Form";
 import useCountryFilterData from "@hook/useCountryFilterData";
+import { CountryType } from "@type/countryType";
 
 interface HomePageType {
-    data: any;
+    data: CountryType[];
 }
 
 export default function HomePageClient({ data }: Readonly<HomePageType>) {
