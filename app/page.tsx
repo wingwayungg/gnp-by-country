@@ -19,8 +19,8 @@ async function fetchCountryGDP() {
 }
 
 export const metadata: Metadata = {
-    title: "My Page Title",
-    description: "List of GDP per person employed of each country in year 2020.",
+    title: "GNP per person",
+    description: "List of GNP per person employed of each country in year 2020.",
 };
 
 export default async function Page() {
