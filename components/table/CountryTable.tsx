@@ -1,34 +1,20 @@
 import Image from "next/legacy/image";
-import React, { FC } from "react";
-import Button from "react-bootstrap/Button";
+import React from "react";
 import Stack from "react-bootstrap/Stack";
-import { useSearchParams } from "next/navigation";
-import useQueryAction from "@hook/useQueryAction";
 import { CountryType } from "@type/countryType";
-import { OrderByEnum } from "@type/sortType";
-import { CountryTableArrow } from "./CountryTableArrow";
+import { CountryTableButton } from "./CountryTableButton";
 import styles from "./CountryTable.module.scss";
 
 interface CountryTableType {
     countries: CountryType[];
 }
 
-export const CountryTable: FC<CountryTableType> = ({ countries }) => {
-    const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
-    const searchParams = useSearchParams();
-
-    const button = (type: `${OrderByEnum}`, text: string) => (
-        <Button onClick={() => dispatchQuery({ type: ACTIONS_QUERY.SORT, payload: { orderBy: type, orderAsc: searchParams.get("orderAsc") !== "true" } })} size="sm" variant="primary" className="d-flex align-items-center">
-            {text}
-            <CountryTableArrow type={type} />
-        </Button>
-    );
-
+export const CountryTable = ({ countries }: CountryTableType) => {
     return (
         <div className="overflow-scroll rounded-3 border border-2 rounded" style={{ height: 500 }}>
             <Stack className="justify-content-between px-3 py-3 border border-light border-2 rounded-3" direction="horizontal">
-                {button("name", "Country Name")}
-                {button("gnp", "GNP per Capital")}
+                <CountryTableButton type="name" text="Country Name" />
+                <CountryTableButton type="gnp" text="GNP per Capital" />
             </Stack>
             {countries?.length ? (
                 <>

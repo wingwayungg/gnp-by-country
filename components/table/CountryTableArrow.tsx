@@ -1,4 +1,3 @@
-import { FC } from "react";
 import Image from "next/legacy/image";
 import { useSearchParams } from "next/navigation";
 import { OrderByEnum } from "@type/sortType";
@@ -7,7 +6,7 @@ interface CountryTableArrowType {
     type: `${OrderByEnum}`;
 }
 
-export const CountryTableArrow: FC<CountryTableArrowType> = ({ type }) => {
+export const CountryTableArrow = ({ type }: CountryTableArrowType) => {
     const searchParams = useSearchParams();
     const orderAsc = searchParams.get("orderAsc");
     const orderBy = searchParams.get("orderBy");

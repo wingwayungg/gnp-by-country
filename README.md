@@ -13,7 +13,7 @@ This is a simple website, listing the Gross National Product(GNP) per person emp
 
   - **React hook Memoization**. This page provides lots of tools for users to inspect the data, like sorting, pagination, searching by country name and GNP data. When using these tools, there are some operations that involves less computation costs using the following useMemo trick: The current search result list is stored as React state and memorized. For example, when users change pages by clicking the next pagination items, instead of sorting or filtering the entire data again, the new result could be retrieved by returning a different index from the current memorized search result list. 
 
-  - **Form Optimization**. An external library react-hook-form is used to optimize the form performance. The form is built with uncontrolled components and does not re-render when the user types in the input fields.
+  - **Form Optimization**. FormAction provided by React v19 is used such that the form is built with uncontrolled components and does not re-render when the user types in the input fields and form values are obtained when submitting.
 
 ## Quality Control
 Lighthouse serve as an excellent tool to measure and ensure the quality of the webpage. 

@@ -1,5 +1,4 @@
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import { FormType } from "@type/formType";
 import { OrderByEnum } from "@type/sortType";
 
 enum ACTIONS_QUERY {
@@ -14,15 +13,19 @@ type ActionType = {
     payload?: {
         orderAsc?: boolean;
         orderBy?: `${OrderByEnum}`;
+    } | {
         page?: number;
-    } & Partial<FormType>;
+    } | FormData;
 };
 
 const queryReducer = (searchParams: ReadonlyURLSearchParams, action: ActionType): URLSearchParams => {
-    const { type, payload: { orderAsc, orderBy, page } = {} } = action;
+    const { type, payload = {} } = action;
     const params = new URLSearchParams(searchParams.toString());
     switch (type) {
         case ACTIONS_QUERY.CHANGE_PAGE:
+            const { page } = payload as Extract<ActionType['payload'], {
+                page?: number;
+            }>;
             params.set('page', page!.toString());
             return params;
         case ACTIONS_QUERY.RESET:
@@ -31,12 +34,16 @@ const queryReducer = (searchParams: ReadonlyURLSearchParams, action: ActionType)
             params.delete('lessThan');
             return params;
         case ACTIONS_QUERY.SORT:
+            const { orderAsc, orderBy } = payload as Extract<ActionType['payload'], {
+                orderAsc?: boolean;
+                orderBy?: `${OrderByEnum}`;
+            }>
             if(orderBy) params.set('orderBy', orderBy as string);
             if(orderAsc?.toString()) params.set('orderAsc', orderAsc.toString());
             params.set('page', '1');
             return params;
         case ACTIONS_QUERY.SUBMIT:
-            for (const [key, value] of Object.entries(action.payload!)) {
+            for (const [key, value] of action.payload as FormData) {
                 if (value != "") {
                     params.set(key, value as string);
                 } else {

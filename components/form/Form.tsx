@@ -1,37 +1,29 @@
+import Form from "next/form";
 import { useSearchParams } from "next/navigation";
-import React, { FC } from "react";
-import { Button, Form, Stack } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import React from "react";
+import Button from "react-bootstrap/Button";
+import BootstrapForm from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
 import useQueryAction from "@hook/useQueryAction";
-import { FormType } from "@type/formType";
 import styles from "./Form.module.scss";
 
-export const FormComponent: FC = () => {
+export const FormComponent = () => {
     const searchParams = useSearchParams();
-    const { register, handleSubmit } = useForm<FormType>({
-        defaultValues: {
-            country: searchParams.get("country") ?? "",
-            greaterThan: Number(searchParams.get("greaterThan")) || "",
-            lessThan: Number(searchParams.get("lessThan")) || "",
-        },
-    });
-
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
-
     return (
-        <Form onSubmit={handleSubmit((data: FormType) => dispatchQuery({ type: ACTIONS_QUERY.SUBMIT, payload: data }))}>
-            <Form.Group controlId="country" className="mb-3">
-                <Form.Label>Country Name</Form.Label>
-                <Form.Control type="text" className={inputClassName} placeholder="Country" {...register("country")} />
-            </Form.Group>
-            <Form.Group controlId="greater" className="mb-3">
-                <Form.Label>GNP per Capital</Form.Label>
+        <Form action={(data: FormData) => dispatchQuery({ type: ACTIONS_QUERY.SUBMIT, payload: data })}>
+            <BootstrapForm.Group controlId="country" className="mb-3">
+                <BootstrapForm.Label>Country Name</BootstrapForm.Label>
+                <BootstrapForm.Control name="country" type="text" className={inputClassName} placeholder="Country" defaultValue={searchParams.get("country") ?? ""} />
+            </BootstrapForm.Group>
+            <BootstrapForm.Group controlId="greater" className="mb-3">
+                <BootstrapForm.Label>GNP per Capital</BootstrapForm.Label>
                 <Stack className="justify-content-between justify-content-md-start" direction="horizontal" gap={3}>
-                    <Form.Control type="number" className={inputClassName} placeholder="Greater than" {...register("greaterThan")} />
+                    <BootstrapForm.Control name="greaterThan" type="number" className={inputClassName} placeholder="Greater than" defaultValue={Number(searchParams.get("greaterThan")) || ""} />
                     <span>-</span>
-                    <Form.Control type="number" className={inputClassName} placeholder="Smaller than" {...register("lessThan")} />
+                    <BootstrapForm.Control name="lessThan" type="number" className={inputClassName} placeholder="Smaller than" defaultValue={Number(searchParams.get("lessThan")) || ""} />
                 </Stack>
-            </Form.Group>
+            </BootstrapForm.Group>
             <Stack className="justify-content-between justify-content-md-start" direction="horizontal" gap={3}>
                 {/* <button className={`btn btn-primary ${styles.button}`}/> */}
                 <Button className={styles.button} variant="primary" type="submit">

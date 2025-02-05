@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import useQueryAction from "@hook/useQueryAction";
 
@@ -7,7 +7,7 @@ interface PaginationComponentType {
     totalPage: number;
 }
 
-export const PaginationComponent: FC<PaginationComponentType> = ({ totalPage }) => {
+export const PaginationComponent = ({ totalPage }: PaginationComponentType) => {
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
     const handlePageChange = (page: number) => dispatchQuery({ type: ACTIONS_QUERY.CHANGE_PAGE, payload: { page } });
 

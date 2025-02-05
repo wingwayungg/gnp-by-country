@@ -12,7 +12,7 @@ interface HomePageType {
     data: CountryType[];
 }
 
-export default function HomePageClient({ data }: Readonly<HomePageType>) {
+export default function HomePageClient({ data }: HomePageType) {
     const { dataDisplayed, totalPage } = useCountryFilterData(data);
     return (
         <>
