@@ -23,7 +23,7 @@ Lighthouse serve as an excellent tool to measure and ensure the quality of the w
 
 
 ## Programming Languages
-The languages I used is React, TypeScript, Scss under Next.js framework. The site is also developed with the help of additional libraries including Bootstrap, React-Bootstrap, React-hook-form and Ramda.
+The languages I used is React, TypeScript, Scss under Next.js framework. The site is also developed with the help of additional libraries including Bootstrap, React-Bootstrap and Ramda.
 
 ## Deployment
 Please visit https://gnp-by-country.wingwayung.com/
