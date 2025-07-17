@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import React from "react";
+import React, { Suspense } from "react";
 import HomePageClient from "@components/home-page-client";
 import { CountryType } from "@type/countryType";
 
@@ -21,15 +21,14 @@ export const metadata: Metadata = {
     description: "List of GNP per person employed of each country in year 2020.",
 };
 
-export type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
-
-export default async function Page(props: { searchParams: SearchParams }) {
+export default async function Page() {
     const countryGDPData = await fetchCountryGDP();
-    await props.searchParams;
     return (
         <div className="px-5">
             <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
-            <HomePageClient data={countryGDPData} />
+            <Suspense>
+                <HomePageClient data={countryGDPData} />
+            </Suspense>
         </div>
     );
 }
