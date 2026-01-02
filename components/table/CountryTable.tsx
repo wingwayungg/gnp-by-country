@@ -11,24 +11,38 @@ interface CountryTableType {
 
 export const CountryTable = ({ countries }: CountryTableType) => {
     return (
-        <div className="overflow-scroll rounded-3 border border-2 rounded" style={{ height: 500 }}>
-            <Stack className="justify-content-between px-3 py-3 border border-light border-2 rounded-3" direction="horizontal">
-                <CountryTableButton type="name" text="Country Name" />
-                <CountryTableButton type="gnp" text="GNP per Capital" />
-            </Stack>
-            {countries?.length ? (
-                <>
-                    {countries?.map((country, index) => (
-                        <Stack className="px-3 py-3 border border-light border-2 rounded-3" direction="horizontal" key={index}>
-                            <Image src={`https://flagsapi.com/${country?.country?.id}/flat/64.png`} alt="country flag" width={50} height={50} priority />
-                            <span className="ms-2 me-auto">{country?.country?.value}</span>
-                            <span className={styles.tabularNumbersEqualWidth}>{country?.value ?? 0}</span>
-                        </Stack>
-                    ))}
-                </>
-            ) : (
-                <div className="mt-5 text-center">No Result!</div>
-            )}
+        <div className="card-premium h-100 bg-white p-0 overflow-hidden d-flex flex-column">
+            {/* Force light mode for card content if desired, or let it inherit. Inheriting is better for dark mode support. */}
+            <div className="d-flex flex-column" style={{ height: "500px" }}>
+                <div className="bg-light p-3 border-bottom sticky-top">
+                    <Stack className="justify-content-between" direction="horizontal">
+                        <CountryTableButton type="name" text="Country Name" />
+                        <div className="text-end">
+                            <CountryTableButton type="gnp" text="GNP per Capita" />
+                        </div>
+                    </Stack>
+                </div>
+
+                <div className="overflow-auto flex-grow-1 p-2">
+                    {countries?.length ? (
+                        <div className="d-flex flex-column gap-2">
+                            {countries?.map((country, index) => (
+                                <div className="d-flex align-items-center p-3 rounded-3 bg-body border" key={index} style={{ transition: "background-color 0.2s" }}>
+                                    <div className="flex-shrink-0">
+                                        <Image src={`https://flagsapi.com/${country?.country?.id}/flat/64.png`} alt="country flag" width={48} height={48} className="rounded-2 shadow-sm" priority />
+                                    </div>
+                                    <span className="ms-3 fw-medium">{country?.country?.value}</span>
+                                    <span className={`ms-auto fw-bold text-primary ${styles.tabularNumbersEqualWidth}`}>{country?.value ? `$${country.value.toLocaleString()}` : 0}</span>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-5 text-muted">
+                            <p className="mb-0 fs-5">No countries found</p>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

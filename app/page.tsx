@@ -24,9 +24,12 @@ export const metadata: Metadata = {
 export default async function Page() {
     const countryGDPData = await fetchCountryGDP();
     return (
-        <div className="px-5">
-            <h1 className="my-2 my-md-3">GDP per person employed (in USD)</h1>
-            <Suspense>
+        <div className="container py-5">
+            <h1 className="my-0 my-md-5 text-center display-5 fw-bold">
+                <span className="bg-gradient-primary">GNP per person employed</span>
+                <span className="d-block fs-3 text-muted mt-2 fw-normal">(in USD, 2020)</span>
+            </h1>
+            <Suspense fallback={<div className="text-center p-5">Loading data...</div>}>
                 <HomePageClient data={countryGDPData} />
             </Suspense>
         </div>

@@ -16,9 +16,9 @@ export const CountryTableButton = ({ type, text }: CountryTableButtonType) => {
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
     const searchParams = useSearchParams();
     return (
-        <Button onClick={() => dispatchQuery({ type: ACTIONS_QUERY.SORT, payload: { orderBy: type, orderAsc: searchParams.get("orderAsc") !== "true" } })} size="sm" variant="primary" className="d-flex align-items-center">
+        <Button onClick={() => dispatchQuery({ type: ACTIONS_QUERY.SORT, payload: { orderBy: type, orderAsc: searchParams.get("orderAsc") !== "true" } })} size="sm" variant="link" className="d-flex align-items-center gap-2 btn-sort-gradient text-decoration-none rounded-2 px-3 py-1">
             {text}
-            <CountryTableArrow type={type} />{" "}
+            <CountryTableArrow type={type} />
         </Button>
     );
 };

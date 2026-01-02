@@ -31,25 +31,27 @@ export const PaginationComponent = ({ totalPage }: PaginationComponentType) => {
     if (totalPage <= 1) return <></>;
 
     return (
-        <Pagination className="justify-content-center justify-content-md-start">
-            <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage == 1} />
-            <Pagination.Prev
-                onClick={() => {
-                    handlePageChange(currentPage - 1);
-                }}
-                disabled={currentPage == 1}
-            />
-            {leftMostPage < totalPage && paginationItem(leftMostPage)}
-            {leftMostPage + 1 < totalPage && paginationItem(leftMostPage + 1)}
-            {leftMostPage + 2 < totalPage && <Pagination.Ellipsis disabled />}
-            {paginationItem(totalPage)}
-            <Pagination.Next
-                onClick={() => {
-                    handlePageChange(currentPage + 1);
-                }}
-                disabled={currentPage == totalPage}
-            />
-            <Pagination.Last onClick={() => handlePageChange(totalPage)} disabled={currentPage == totalPage} />
-        </Pagination>
+        <div className="d-flex justify-content-center mt-4">
+            <Pagination className="gap-1">
+                <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage == 1} />
+                <Pagination.Prev
+                    onClick={() => {
+                        handlePageChange(currentPage - 1);
+                    }}
+                    disabled={currentPage == 1}
+                />
+                {leftMostPage < totalPage && paginationItem(leftMostPage)}
+                {leftMostPage + 1 < totalPage && paginationItem(leftMostPage + 1)}
+                {leftMostPage + 2 < totalPage && <Pagination.Ellipsis disabled />}
+                {paginationItem(totalPage)}
+                <Pagination.Next
+                    onClick={() => {
+                        handlePageChange(currentPage + 1);
+                    }}
+                    disabled={currentPage == totalPage}
+                />
+                <Pagination.Last onClick={() => handlePageChange(totalPage)} disabled={currentPage == totalPage} />
+            </Pagination>
+        </div>
     );
 };
