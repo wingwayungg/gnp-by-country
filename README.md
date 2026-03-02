@@ -4,7 +4,7 @@ This is a simple website, listing the Gross National Product(GNP) per person emp
   - filtering by GNP
   - sorting by name or value of GNP
   - pagination
-  - dark mode (upcoming)
+  - dark mode
 
 ## Technical Features
   - **Pre-rendering**. The GNP figures in 2020 are a past record, and are therefore static. The data is firstly pre-fetched using WorldBank API at build time. The users need not wait for fetching the data when entering the webpage as the pre-fetched data is already passed to client components. Furthermore, as the data is fetched, all the navigation, such as searching by country name or going to next/previous pagination, is done on client side to avoid unnecessary API calls (thus the page works during offline!). Since the pre-render result is static and cached, a hard reload or request through url won't trigger further server rerender.
