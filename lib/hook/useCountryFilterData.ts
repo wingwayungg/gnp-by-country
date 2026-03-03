@@ -21,8 +21,8 @@ const useCountryFilterData = (data: CountryType[]) => {
         const filter_By_GreaterThan = R.when<CountryType[], CountryType[]>(() => !R.isNil(greaterThan), R.filter(R.propSatisfies((x: number) => x >= Number(greaterThan), "value")));
         const filter_By_LessThan = R.when<CountryType[], CountryType[]>(() => !R.isNil(lessThan), R.filter(R.propSatisfies((x: number) => x <= Number(lessThan), "value")));
         const order = orderAsc === "true" ? R.ascend : R.descend;
-        // @ts-ignore
-        const sortByKey: (obj: any) => R.Ord = R.path(orderBy === "name" ? ["country", "value"] : ["value"]);
+        // @ts-expect-error - R.path's return type can't be narrowed to R.Ord from a dynamic key path
+        const sortByKey: (obj: CountryType) => R.Ord = R.path(orderBy === "name" ? ["country", "value"] : ["value"]);
         const sortBy = R.sort(order(sortByKey));
         const filter = R.compose<CountryType[][], CountryType[], CountryType[], CountryType[], CountryType[]>(sortBy, filter_By_Country, filter_By_GreaterThan, filter_By_LessThan);
         return filter(data);

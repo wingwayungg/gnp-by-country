@@ -8,13 +8,13 @@ export default function ThemeToggle() {
     useEffect(() => {
         // specific to Next.js - we want to access document only in useEffect
         const storedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-        if (storedTheme) {
-            setTheme(storedTheme);
-            document.documentElement.setAttribute("data-bs-theme", storedTheme);
-        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        const initialTheme = storedTheme ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        if (initialTheme === "dark") {
+            // reading the persisted/OS theme requires browser APIs unavailable during SSR, so it can only be resolved after mount
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setTheme("dark");
-            document.documentElement.setAttribute("data-bs-theme", "dark");
         }
+        document.documentElement.setAttribute("data-bs-theme", initialTheme);
     }, []);
 
     const toggleTheme = () => {
@@ -25,12 +25,7 @@ export default function ThemeToggle() {
     };
 
     return (
-        <button
-            onClick={toggleTheme}
-            className="btn btn-outline-secondary position-fixed top-0 end-0 m-3 z-3 rounded-circle d-flex align-items-center justify-content-center p-2"
-            style={{ width: "40px", height: "40px" }}
-            aria-label="Toggle theme"
-        >
+        <button onClick={toggleTheme} className="btn btn-outline-secondary position-fixed top-0 end-0 m-3 z-3 rounded-circle d-flex align-items-center justify-content-center p-2" style={{ width: "40px", height: "40px" }} aria-label="Toggle theme">
             {theme === "light" ? "🌙" : "☀️"}
         </button>
     );

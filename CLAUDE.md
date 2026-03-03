@@ -12,7 +12,7 @@ A Next.js (App Router) site that lists GNP per person employed by country for 20
 pnpm dev      # start dev server (Turbopack)
 pnpm build    # production build
 pnpm start    # run production build
-pnpm lint     # next lint
+pnpm lint     # eslint
 ```
 
 Node version is pinned via `.nvmrc` (v24). Package manager is pnpm (see `pnpm-lock.yaml`). There is no test suite configured in this repo.

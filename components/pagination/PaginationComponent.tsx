@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import useQueryAction from "@hook/useQueryAction";
 
@@ -16,17 +16,18 @@ export const PaginationComponent = ({ totalPage }: PaginationComponentType) => {
 
     // the page no. showed on the leftmost button
     const [leftMostPage, setLeftMostPage] = useState(currentPage);
+    // tracks the currentPage this render is adjusting leftMostPage for, so the reset below runs once per page change instead of looping
+    const [adjustedForPage, setAdjustedForPage] = useState(currentPage);
+    if (currentPage !== adjustedForPage) {
+        setAdjustedForPage(currentPage);
+        if (currentPage != leftMostPage && currentPage != leftMostPage + 1) setLeftMostPage(currentPage);
+    }
 
     const paginationItem = (itemNo: number) => (
         <Pagination.Item onClick={() => handlePageChange(itemNo)} active={currentPage === itemNo}>
             {itemNo}
         </Pagination.Item>
     );
-
-    useEffect(() => {
-        if (currentPage != leftMostPage && currentPage != leftMostPage + 1) setLeftMostPage(currentPage);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage]);
 
     if (totalPage <= 1) return <></>;
 
