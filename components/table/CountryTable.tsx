@@ -11,10 +11,9 @@ interface CountryTableType {
 
 export const CountryTable = ({ countries }: CountryTableType) => {
     return (
-        <div className="card-premium h-100 bg-white p-0 overflow-hidden d-flex flex-column">
-            {/* Force light mode for card content if desired, or let it inherit. Inheriting is better for dark mode support. */}
+        <div className="card-premium h-100 bg-body p-0 overflow-hidden d-flex flex-column">
             <div className="d-flex flex-column" style={{ height: "500px" }}>
-                <div className="bg-light p-3 border-bottom sticky-top">
+                <div className="bg-body-secondary p-3 border-bottom sticky-top">
                     <Stack className="justify-content-between" direction="horizontal">
                         <CountryTableButton type="name" text="Country Name" />
                         <div className="text-end">
