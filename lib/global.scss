@@ -1,12 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap");
-
 // Enable Dark Mode option in Bootstrap
 $enable-dark-mode: true;
 $color-mode-type: data; // Use data-bs-theme attribute
 
 // Premium Colors & Variables
 :root {
-  --font-main: "Outfit", sans-serif;
+  --font-main: var(--font-outfit), sans-serif;
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --surface-light: #ffffff;
   --surface-dark: #1a1a1a;
