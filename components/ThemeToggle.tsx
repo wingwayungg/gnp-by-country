@@ -14,18 +14,18 @@ export default function ThemeToggle() {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setTheme("dark");
         }
-        document.documentElement.setAttribute("data-bs-theme", initialTheme);
+        document.documentElement.dataset.bsTheme = initialTheme;
     }, []);
 
     const toggleTheme = () => {
         const newTheme = theme === "light" ? "dark" : "light";
         setTheme(newTheme);
         localStorage.setItem("theme", newTheme);
-        document.documentElement.setAttribute("data-bs-theme", newTheme);
+        document.documentElement.dataset.bsTheme = newTheme;
     };
 
     return (
-        <button onClick={toggleTheme} className="btn btn-outline-secondary position-fixed top-0 end-0 m-3 z-3 rounded-circle d-flex align-items-center justify-content-center p-2" style={{ width: "40px", height: "40px" }} aria-label="Toggle theme">
+        <button onClick={toggleTheme} className="btn btn-outline-secondary position-fixed top-0 end-0 m-3 z-3 rounded-circle d-flex align-items-center justify-content-center p-2" style={{ width: "40px", height: "40px" }} aria-label="Toggle theme" type="button">
             {theme === "light" ? "🌙" : "☀️"}
         </button>
     );

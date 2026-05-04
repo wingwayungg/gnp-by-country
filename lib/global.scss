@@ -1,17 +1,3 @@
-// Enable Dark Mode option in Bootstrap
-$enable-dark-mode: true;
-$color-mode-type: data; // Use data-bs-theme attribute
-
-// Premium Colors & Variables
-:root {
-  --font-main: var(--font-outfit), sans-serif;
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --surface-light: #ffffff;
-  --surface-dark: #1a1a1a;
-  --text-main-light: #2d3748;
-  --text-main-dark: #f7fafc;
-}
-
 // Override Bootstrap Defaults before import
 $font-family-sans-serif: var(--font-main);
 $primary: #667eea;
@@ -25,6 +11,20 @@ $primary: #667eea;
 @import "~bootstrap/scss/forms";
 @import "~bootstrap/scss/buttons";
 @import "~bootstrap/scss/pagination";
+
+// Enable Dark Mode option in Bootstrap
+$enable-dark-mode: true;
+$color-mode-type: data; // Use data-bs-theme attribute
+
+// Premium Colors & Variables
+:root {
+  --font-main: var(--font-outfit), sans-serif;
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --surface-light: #ffffff;
+  --surface-dark: #1a1a1a;
+  --text-main-light: #2d3748;
+  --text-main-dark: #f7fafc;
+}
 
 html,
 body {
@@ -151,7 +151,7 @@ a {
   border: none;
 
   &:hover {
-    color: #764ba2;
+    color: #1a1a1a;
     background-color: rgba(102, 126, 234, 0.1);
   }
 }
