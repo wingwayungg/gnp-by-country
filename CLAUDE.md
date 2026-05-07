@@ -15,7 +15,7 @@ pnpm start    # run production build
 pnpm lint     # eslint
 ```
 
-Node version is pinned via `.nvmrc` (v24). Package manager is pnpm (see `pnpm-lock.yaml`). There is no test suite configured in this repo.
+Node version is pinned via pnpm (`pnpm env use --global 24`, matching the `packageManager` field in `package.json`). There is no test suite configured in this repo.
 
 ## Architecture
 
