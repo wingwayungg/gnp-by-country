@@ -6,7 +6,7 @@ import { CountryTableButton } from "./CountryTableButton";
 import styles from "./CountryTable.module.scss";
 
 interface CountryTableType {
-    countries: CountryType[];
+    countries: readonly CountryType[];
 }
 
 export const CountryTable = ({ countries }: CountryTableType) => {

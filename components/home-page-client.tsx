@@ -9,10 +9,10 @@ import useCountryFilterData from "@hook/useCountryFilterData";
 import { CountryType } from "@type/countryType";
 
 interface HomePageType {
-    data: CountryType[];
+    data: readonly CountryType[];
 }
 
-export default function HomePageClient({ data }: HomePageType) {
+const HomePageClient = ({ data }: HomePageType) => {
     const { dataDisplayed, totalPage } = useCountryFilterData(data);
     return (
         <>
@@ -29,4 +29,6 @@ export default function HomePageClient({ data }: HomePageType) {
             <PaginationComponent totalPage={totalPage} />
         </>
     );
-}
+};
+
+export default HomePageClient;

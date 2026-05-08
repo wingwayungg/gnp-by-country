@@ -1,10 +1,10 @@
 export type CountryType = {
-    country: { id: string; value: string };
-    countryiso3code: string;
-    date: string;
-    decimal: number;
-    indicator: { id: string; value: string };
-    obs_status: string;
-    unit: string;
-    value: number;
+    readonly country: { readonly id: string; readonly value: string };
+    readonly countryiso3code: string;
+    readonly date: string;
+    readonly decimal: number;
+    readonly indicator: { readonly id: string; readonly value: string };
+    readonly obs_status: string;
+    readonly unit: string;
+    readonly value: number;
 };
