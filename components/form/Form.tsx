@@ -1,6 +1,5 @@
 import Form from "next/form";
 import { useSearchParams } from "next/navigation";
-import React from "react";
 import Button from "react-bootstrap/Button";
 import BootstrapForm from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";

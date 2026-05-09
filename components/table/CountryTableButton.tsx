@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Button from "react-bootstrap/Button";
 import { useSearchParams } from "next/navigation";
 import useQueryAction from "@hook/useQueryAction";

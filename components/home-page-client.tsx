@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { CountryTable } from "@components/table/CountryTable";
 import { PaginationComponent } from "@components/pagination/PaginationComponent";

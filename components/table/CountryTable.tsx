@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 import Stack from "react-bootstrap/Stack";
 import { CountryType } from "@type/countryType";
 import { CountryTableButton } from "./CountryTableButton";
