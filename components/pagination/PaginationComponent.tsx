@@ -1,7 +1,7 @@
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import useQueryAction from "@hook/useQueryAction";
+import useQueryState from "@hook/useQueryState";
 
 interface PaginationComponentType {
     totalPage: number;
@@ -9,10 +9,8 @@ interface PaginationComponentType {
 
 export const PaginationComponent = ({ totalPage }: PaginationComponentType) => {
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
+    const { page: currentPage } = useQueryState();
     const handlePageChange = (page: number) => dispatchQuery({ type: ACTIONS_QUERY.CHANGE_PAGE, payload: { page } });
-
-    const searchParams = useSearchParams();
-    const currentPage = Number(searchParams.get("page")) || 1;
 
     // the page no. showed on the leftmost button
     const [leftMostPage, setLeftMostPage] = useState(currentPage);

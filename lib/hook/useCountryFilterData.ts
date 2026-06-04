@@ -1,17 +1,11 @@
 import { useMemo } from "react";
-import { useSearchParams } from "next/navigation";
 import { CountryType } from "@type/countryType";
+import useQueryState from "@hook/useQueryState";
 import * as R from "ramda";
 
 const no_display = 10;
 const useCountryFilterData = (data: readonly CountryType[]) => {
-    const searchParams = useSearchParams();
-    const country = searchParams.get('country');
-    const greaterThan = searchParams.get('greaterThan');
-    const lessThan = searchParams.get('lessThan');
-    const orderAsc = searchParams.get('orderAsc');
-    const orderBy = searchParams.get('orderBy');
-    const page = searchParams.get('page');
+    const { country, greaterThan, lessThan, orderAsc, orderBy, page: currentPage } = useQueryState();
 
     const dataFiltered = useMemo(() => {
         const filter_By_Country = R.when<readonly CountryType[], readonly CountryType[]>(
@@ -20,7 +14,7 @@ const useCountryFilterData = (data: readonly CountryType[]) => {
         );
         const filter_By_GreaterThan = R.when<readonly CountryType[], readonly CountryType[]>(() => !R.isNil(greaterThan), R.filter(R.propSatisfies((x: number) => x >= Number(greaterThan), "value")));
         const filter_By_LessThan = R.when<readonly CountryType[], readonly CountryType[]>(() => !R.isNil(lessThan), R.filter(R.propSatisfies((x: number) => x <= Number(lessThan), "value")));
-        const order = orderAsc === "true" ? R.ascend : R.descend;
+        const order = orderAsc ? R.ascend : R.descend;
         // @ts-expect-error - R.path's return type can't be narrowed to R.Ord from a dynamic key path
         const sortByKey: (obj: CountryType) => R.Ord = R.path(orderBy === "name" ? ["country", "value"] : ["value"]);
         const sortBy = R.sort(order(sortByKey));
@@ -28,7 +22,6 @@ const useCountryFilterData = (data: readonly CountryType[]) => {
         return filter(data);
     }, [data, country, greaterThan, lessThan, orderAsc, orderBy]); // no need to filter again when only page changes
 
-    const currentPage = Number(page) || 1;
     const showCurrentPage = R.slice((currentPage - 1) * no_display, currentPage * no_display);
     const dataDisplayed = showCurrentPage(dataFiltered);
     const totalPage = Math.ceil(dataFiltered?.length / no_display);

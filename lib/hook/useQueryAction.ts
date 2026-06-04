@@ -57,10 +57,16 @@ const queryReducer = (searchParams: ReadonlyURLSearchParams, action: ActionType)
     }
 };
 
+// a new search (SUBMIT/RESET) is worth a back-button entry; refining the current view (SORT/CHANGE_PAGE) is not
+const PUSH_STATE_ACTIONS: ACTIONS_QUERY[] = [ACTIONS_QUERY.SUBMIT, ACTIONS_QUERY.RESET];
+
 const useQueryAction = () => {
     const searchParams = useSearchParams();
 
-    const dispatchQuery = (action: ActionType) => window.history.pushState(null, '', `?${queryReducer(searchParams, action).toString()}`);
+    const dispatchQuery = (action: ActionType) => {
+        const method = PUSH_STATE_ACTIONS.includes(action.type) ? 'pushState' : 'replaceState';
+        window.history[method](null, '', `?${queryReducer(searchParams, action).toString()}`);
+    };
 
     return { ACTIONS_QUERY, dispatchQuery };
 };
