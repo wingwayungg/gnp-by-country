@@ -30,7 +30,7 @@ export const CountryTable = ({ countries }: CountryTableType) => {
                                         <Image src={`https://flagsapi.com/${country.country.id}/flat/64.png`} alt="country flag" width={48} height={48} className="rounded-2 shadow-sm" priority />
                                     </div>
                                     <span className="ms-3 fw-medium">{country.country.value}</span>
-                                    <span className={`ms-auto fw-bold text-primary ${styles.tabularNumbersEqualWidth}`}>{country?.value ? `$${country.value.toLocaleString()}` : 0}</span>
+                                    <span className={`ms-auto fw-bold text-primary-emphasis ${styles.tabularNumbersEqualWidth}`}>{country?.value ? `$${country.value.toLocaleString()}` : 0}</span>
                                 </div>
                             ))}
                         </div>

@@ -12,7 +12,7 @@ export const FormComponent = () => {
     const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
     return (
         <div className="card-premium p-4 h-100 bg-body">
-            <h4 className="mb-4 fw-bold text-secondary">Filter Data</h4>
+            <h2 className="mb-4 fw-bold text-secondary fs-5">Filter Data</h2>
             <Form action={(data: FormData) => dispatchQuery({ type: ACTIONS_QUERY.SUBMIT, payload: data })}>
                 <BootstrapForm.Group controlId="country" className="mb-4 vstack">
                     <BootstrapForm.Label className="small text-uppercase fw-bold text-muted">Country Name</BootstrapForm.Label>
