@@ -33,7 +33,13 @@ module.exports = {
                     "./node_modules/react-bootstrap/esm/Stack.js",
                 ],
                 defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
-                safelist: ["html", "body"],
+                // react-bootstrap's Col builds classes like `col-md-6` via template-literal
+                // concatenation (`${bsPrefix}${infix}-${span}`), so the literal string never
+                // appears in Col.js for PurgeCSS's content scan to find — safelist exactly the
+                // classes HomePageClient's <Col> props produce instead of scanning node_modules.
+                safelist: {
+                    standard: ["html", "body", "col-12", "col-md-6", "order-md-first"],
+                },
             },
         ],
     ],
