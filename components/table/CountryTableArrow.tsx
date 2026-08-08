@@ -15,5 +15,5 @@ export const CountryTableArrow = ({ type }: CountryTableArrowType) => {
     const showArrowCase2 = orderBy === type;
 
     if (!showArrowCase1 && !showArrowCase2) return <></>;
-    return <Image src="/images/arrow-up.svg" alt="me" width={14} height={14} {...(!orderAsc && { className: "rotate180" })} />;
+    return <Image src="/images/arrow-up.svg" alt="arrow" width={14} height={14} unoptimized {...(!orderAsc && { className: "rotate180" })} />;
 };
