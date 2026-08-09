@@ -28,7 +28,7 @@ export const FormComponent = () => {
                     </Stack>
                 </BootstrapForm.Group>
 
-                <Stack direction="horizontal" gap={3} className="mt-5">
+                <Stack direction="horizontal" gap={3}>
                     <Button className="flex-grow-1 py-2 fw-bold" variant="primary" type="submit" style={{ background: "var(--primary-gradient)", border: "none" }}>
                         Search
                     </Button>
