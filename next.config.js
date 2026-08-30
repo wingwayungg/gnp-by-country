@@ -1,4 +1,7 @@
 module.exports = {
+    sassOptions: {
+        quietDeps: true,
+    },
     images: {
         // Dangerously Allow SVG to optimize images
         // Reference: https://nextjs.org/docs/api-reference/next/image#dangerously-allow-svg
