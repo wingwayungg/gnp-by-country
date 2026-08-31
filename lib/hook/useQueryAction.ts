@@ -50,6 +50,7 @@ const queryReducer = (searchParams: ReadonlyURLSearchParams, action: ActionType)
                     params.delete(key);
                 }
             }
+            params.set('page', '1');
             return params;
         default:
             return params;
