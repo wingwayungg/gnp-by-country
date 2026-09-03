@@ -191,6 +191,30 @@ a {
     }
   }
 
+  .card-premium.bg-body {
+    background-color: var(--surface-dark) !important;
+    color: var(--text-main-dark);
+  }
+
+  .btn-outline-secondary {
+    --bs-btn-color: var(--bs-secondary-color);
+    --bs-btn-border-color: var(--bs-secondary-color);
+    --bs-btn-hover-color: var(--surface-dark);
+    --bs-btn-hover-bg: var(--bs-secondary-color);
+    --bs-btn-hover-border-color: var(--bs-secondary-color);
+    --bs-btn-active-color: var(--surface-dark);
+    --bs-btn-active-bg: var(--bs-secondary-color);
+    --bs-btn-active-border-color: var(--bs-secondary-color);
+  }
+
+  .page-link {
+    color: #8ea0f3;
+
+    &:hover {
+      color: var(--text-main-dark);
+    }
+  }
+
   ::-webkit-scrollbar-thumb {
     background: #4a5568;
   }
