@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import HomePageClient from "@components/home-page-client";
+import HomePageClient from "@components/HomePageClient";
 import { CountryType } from "@type/countryType";
 
 async function fetchCountryGDP() {
