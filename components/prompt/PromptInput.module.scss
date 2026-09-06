@@ -1,0 +1,91 @@
+.glow {
+    max-width: 40rem;
+    padding: 2px;
+    background: linear-gradient(90deg, var(--primary) 0%, #a78bfa 25%, var(--primary-dark) 50%, var(--primary) 75%, #a78bfa 100%);
+    background-size: 300% 100%;
+    animation: shimmer 7s linear infinite;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s;
+
+    &:focus-within {
+        box-shadow:
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06),
+            0 0 0 3px rgba(var(--primary-rgb), 0.25);
+    }
+}
+
+@keyframes shimmer {
+    to {
+        background-position: -300% 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glow {
+        animation: none;
+    }
+}
+
+.bar {
+    padding: 0.3rem;
+}
+
+.badge {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--primary-gradient);
+}
+
+.input {
+    min-width: 0;
+    padding: 0.625rem 0;
+    font-size: 1rem;
+    color: inherit;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        color: var(--bs-secondary-color);
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.send {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #fff;
+    background: var(--primary-gradient);
+    transition:
+        transform 0.15s,
+        filter 0.15s;
+
+    &:hover:not(:disabled) {
+        filter: brightness(1.1);
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: default;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+    }
+}
+
+.sending {
+    animation: pulse 0.35s ease;
+}
+
+@keyframes pulse {
+    50% {
+        transform: scale(0.82);
+    }
+}
