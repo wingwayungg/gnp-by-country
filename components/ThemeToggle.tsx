@@ -1,20 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 export default function ThemeToggle() {
     const [theme, setTheme] = useState<"light" | "dark">("light");
 
-    useEffect(() => {
-        // specific to Next.js - we want to access document only in useEffect
-        const storedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-        const initialTheme = storedTheme ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        if (initialTheme === "dark") {
-            // reading the persisted/OS theme requires browser APIs unavailable during SSR, so it can only be resolved after mount
+    // useLayoutEffect (not useEffect) so the button icon is corrected before the browser paints,
+    // rather than flashing the wrong icon for a frame after mount. The inline script in
+    // app/layout.tsx has already resolved the theme and applied it to <html> before this runs, so
+    // read it back from there instead of re-deriving it from localStorage/matchMedia.
+    useLayoutEffect(() => {
+        if (document.documentElement.dataset.bsTheme === "dark") {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setTheme("dark");
         }
-        document.documentElement.dataset.bsTheme = initialTheme;
     }, []);
 
     const toggleTheme = () => {
