@@ -52,13 +52,3 @@ Node version is pinned via pnpm (`pnpm env use --global 24`, matching the `packa
 **Styling**: SCSS Modules for component-scoped styles (`CountryTable.module.scss`) plus a global stylesheet (`lib/global.scss`) imported once in `app/layout.tsx`. Bootstrap + react-bootstrap provide layout/components; PurgeCSS and postcss-preset-env run via `postcss.config.js`.
 
 **Images**: country flags are loaded from `flagsapi.com` via `next/image`; the allowed remote host is whitelisted in `next.config.js`.
-
-<!-- BEGIN:nextjs-agent-rules -->
-
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
