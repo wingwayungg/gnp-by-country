@@ -2,16 +2,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import HomePageClient from "@components/HomePageClient";
 import { PromptInput } from "@components/prompt/PromptInput";
-import { CountryType } from "@type/countryType";
-
-async function fetchCountryGDP() {
-    return fetch("https://api.worldbank.org/v2/country/all/indicator/SL.GDP.PCAP.EM.KD?format=json&date=2020&per_page=266", { cache: "force-cache" })
-        .then((res) => res.json())
-        .then(
-            (data) => data?.[1]?.slice(49)?.flatMap((o: CountryType) => (o?.value ? [{ ...o, value: Math.trunc(o.value) }] : [])) as CountryType[] // get only countries that have GNP data, truncated to integer
-        )
-        .catch(() => [] as CountryType[]); // in case of error when fetching the API // clear cache
-}
+import { fetchCountryGDP } from "@lib/countryData";
 
 export const metadata: Metadata = {
     title: "GNP per person",

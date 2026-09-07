@@ -25,6 +25,9 @@
       "@components/*": [
         "./components/*"
       ],
+      "@lib/*": [
+        "./lib/*"
+      ],
       "@hook/*": [
         "./lib/hook/*"
       ],

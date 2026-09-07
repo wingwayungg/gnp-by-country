@@ -3,10 +3,10 @@
     padding: 2px;
     background: linear-gradient(90deg, var(--primary) 0%, #a78bfa 25%, var(--primary-dark) 50%, var(--primary) 75%, #a78bfa 100%);
     background-size: 300% 100%;
-    animation: shimmer 7s linear infinite;
     box-shadow:
         0 4px 6px -1px rgba(0, 0, 0, 0.1),
         0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    animation: shimmer 7s linear infinite;
     transition: box-shadow 0.2s;
 
     &:focus-within {
@@ -88,4 +88,18 @@
     50% {
         transform: scale(0.82);
     }
+}
+
+.answer {
+    max-width: 40rem;
+}
+
+.card {
+    padding: 0.875rem 1.125rem;
+    border-left: 3px solid var(--primary);
+}
+
+.question {
+    font-size: 0.8125rem;
+    color: var(--bs-secondary-color);
 }

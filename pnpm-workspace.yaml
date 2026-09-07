@@ -1,3 +1,5 @@
 allowBuilds:
+  '@google/genai': false
   '@parcel/watcher': true
+  protobufjs: false
   unrs-resolver: true

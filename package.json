@@ -8,6 +8,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/genai": "^2.21.0",
     "bootstrap": "^5.3.8",
     "next": "16.3.3",
     "ramda": "^0.31.3",
