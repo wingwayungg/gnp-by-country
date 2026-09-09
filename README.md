@@ -26,7 +26,7 @@ A prompt bar sits above the table. It sends the question, together with the full
 
 The last four rows show the guardrails: a question unrelated to the dataset gets `Irrelevant`, and a question about the right topic but a country the World Bank doesn't publish data for gets `No data` — rather than the model guessing or reaching for outside knowledge.
 
-> **Note:** this runs on Google AI Studio's free tier, which is heavily contended — answers can be quick or can take several seconds, and the route gives up after 12s and returns an error rather than leaving the request hanging. If you see a timeout or "unavailable" error, it's usually free-tier congestion — try again in a moment.
+> **Note:** this runs on Google AI Studio's free tier, which is heavily contended — answers can be quick or can take several seconds, and the server action gives up after 12s and returns an error rather than leaving the request hanging. If you see a timeout or "unavailable" error, it's usually free-tier congestion — try again in a moment.
 
 ## Technical Features
   - **Pre-rendering**. The GNP figures in 2020 are a past record, and are therefore static. The data is firstly pre-fetched using WorldBank API at build time. The users need not wait for fetching the data when entering the webpage as the pre-fetched data is already passed to client components. Furthermore, as the data is fetched, all the navigation, such as searching by country name or going to next/previous pagination, is done on client side to avoid unnecessary API calls (thus the page works during offline!). Since the pre-render result is static and cached, a hard reload or request through url won't trigger further server rerender.

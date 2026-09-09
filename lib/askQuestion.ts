@@ -1,5 +1,8 @@
+"use server";
+
 import { ApiError, GoogleGenAI, ThinkingLevel } from "@google/genai";
 import { DATA_YEAR, fetchCountryGDP } from "@lib/countryData";
+import { AskState } from "@type/askType";
 
 const MODEL = process.env.GEMINI_MODEL ?? "gemini-3.1-flash-lite"; // free tier on Google AI Studio; the newer flash models are heavily contended there and stall for 15-25s or return 503
 const REQUEST_TIMEOUT_MS = 12_000; // a lookup this small never legitimately takes this long — fail fast instead of hanging the UI
@@ -21,29 +24,27 @@ Rules:
 Dataset (country: GNP per person employed, USD, ${DATA_YEAR}), ordered from highest to lowest:
 ${dataset}`;
 
-export async function POST(request: Request) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-        return Response.json({ error: "The AI service is not configured." }, { status: 500 });
-    }
+const failed = (question: string, error: string): AskState => ({ status: "error", question, error });
 
-    let question: unknown;
-    try {
-        ({ question } = await request.json());
-    } catch {
-        return Response.json({ error: "Invalid request body." }, { status: 400 });
-    }
+// Shaped for useActionState: (previous state, form data) -> next state. The previous answer is never
+// read — each question is independent — but the parameter is part of the signature React calls with.
+export async function askQuestion(_prevState: AskState, formData: FormData): Promise<AskState> {
+    const submitted = formData.get("question");
+    const question = typeof submitted === "string" ? submitted.trim() : "";
 
-    if (typeof question !== "string" || !question.trim()) {
-        return Response.json({ error: "A question is required." }, { status: 400 });
+    if (!question) {
+        return failed("", "A question is required.");
     }
     if (question.length > MAX_QUESTION_LENGTH) {
-        return Response.json({ error: `Keep the question under ${MAX_QUESTION_LENGTH} characters.` }, { status: 400 });
+        return failed(question, `Keep the question under ${MAX_QUESTION_LENGTH} characters.`);
+    }
+    if (!process.env.GEMINI_API_KEY) {
+        return failed(question, "The AI service is not configured.");
     }
 
     const countries = await fetchCountryGDP();
     if (!countries.length) {
-        return Response.json({ error: "The GNP data is unavailable right now." }, { status: 503 });
+        return failed(question, "The GNP data is unavailable right now.");
     }
 
     // Sorted by value so ranking questions ("top 5", "lowest 3") are answered by reading consecutive lines rather than
@@ -60,7 +61,7 @@ export async function POST(request: Request) {
     return ai.models
         .generateContent({
             model: MODEL,
-            contents: question.trim(),
+            contents: question,
             config: {
                 systemInstruction: buildSystemInstruction(dataset),
                 temperature: 0, // a lookup, not a creative answer
@@ -72,34 +73,37 @@ export async function POST(request: Request) {
                 abortSignal: abort.signal,
             },
         })
-        .then((response) => {
+        .then((response): AskState => {
             // A truncated answer is worse than none: it reads as a confident, complete reply while cutting off
             // mid-number. Surface it as an error rather than letting a half-written figure reach the user.
             if (response.candidates?.[0]?.finishReason === "MAX_TOKENS") {
                 console.error("Gemini hit maxOutputTokens; answer discarded as truncated");
-                return Response.json({ error: "That answer was too long to finish — try a narrower question." }, { status: 502 });
+                return failed(question, "That answer was too long to finish — try a narrower question.");
             }
 
             const answer = response.text?.trim();
-            return Response.json({ answer: answer || "No data" });
+            return { status: "answered", question, answer: answer || "No data" };
         })
-        .catch((error) => {
+        .catch((error): AskState => {
             if (abort.signal.aborted) {
                 console.error(`Gemini request exceeded ${REQUEST_TIMEOUT_MS}ms`);
-                return Response.json({ error: "The AI service is taking too long — try again in a moment." }, { status: 504 });
+                return failed(question, "The AI service is taking too long — try again in a moment.");
             }
             if (error instanceof ApiError) {
                 console.error(`Gemini request failed (${error.status}):`, error.message);
                 // A rejected key comes back as 400 API_KEY_INVALID, not 401 — treat it as a config problem, not an outage.
                 if (error.status === 401 || error.status === 403 || error.message.includes("API_KEY_INVALID")) {
-                    return Response.json({ error: "The AI service is not configured." }, { status: 500 });
+                    return failed(question, "The AI service is not configured.");
                 }
                 if (error.status === 429) {
-                    return Response.json({ error: "Too many questions right now — try again in a moment." }, { status: 429 });
+                    return failed(question, "Too many questions right now — try again in a moment.");
                 }
-                return Response.json({ error: "The AI service is unavailable right now." }, { status: 502 });
+                return failed(question, "The AI service is unavailable right now.");
             }
-            throw error;
+            // Rethrowing here would reach the client as an opaque digest and trip the error boundary, taking the
+            // whole page down over one failed question — log it in full instead so nothing is silently swallowed.
+            console.error("Unexpected failure while asking Gemini:", error);
+            return failed(question, "The AI service is unavailable right now.");
         })
         .finally(() => {
             clearTimeout(timeout);
