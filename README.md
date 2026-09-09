@@ -40,7 +40,7 @@ The last four rows show the guardrails: a question unrelated to the dataset gets
   - **AI Question Answering**. The entire dataset (pre-sorted by value) passed in as a system instruction plus the user's question are sent to Gemini. The pre-sorting allows ranking questions like "top 5" are answered by reading consecutive lines rather than sorting 176 numbers in model, prone to error from my testing result. Gemini by default uses implicit context caching as it recognizes identical instruction (i.e. dataset) on every request even thought the question changes, so the LLM answers faster by reusing internal cached neural states. Explicit caching is avoided on purpose: it makes no sense to keep the data in memory for a low-traffic personal site every hour.
 
 ## Quality Control
-Lighthouse serve as an excellent tool to measure and ensure the quality of the webpage. 
+Lighthouse serve as an excellent tool to measure and ensure the quality of the webpage.
 <br />
 <p align="center"><img width="556" alt="Screenshot 2024-03-20 at 11 34 43 AM" src="https://github.com/user-attachments/assets/58ce2483-7d27-4334-9fcc-cf3e2e42a9cd"></p>
 

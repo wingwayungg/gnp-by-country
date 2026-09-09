@@ -2,13 +2,12 @@
 
 import { askQuestion } from "@lib/askQuestion";
 import { AskState } from "@type/askType";
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import styles from "./PromptInput.module.scss";
 
 export const PromptInput = () => {
-    const [value, setValue] = useState("");
-    // The server action is passed straight to <form action>, so React owns the pending flag and the
-    // answer/error state, and the form still submits without JS.
+    // the form could submit without JS.
+    // as tradeoff, the question is cleared every time after submission
     const [state, formAction, pending] = useActionState<AskState, FormData>(askQuestion, { status: "idle" });
 
     return (
@@ -23,17 +22,8 @@ export const PromptInput = () => {
                             <circle cx="8" cy="4" r="1.5" fill="white" />
                         </svg>
                     </span>
-                    <input
-                        type="text"
-                        name="question"
-                        value={value}
-                        onChange={(event) => setValue(event.target.value)}
-                        placeholder="Ask AI about this data — e.g. “top 5 countries by GNP per person”"
-                        aria-label="Ask AI a question about the GNP data"
-                        maxLength={500}
-                        className={`${styles.input} flex-grow-1 bg-transparent border-0`}
-                    />
-                    <button type="submit" aria-label="Send prompt" disabled={!value.trim() || pending} className={`${styles.send} ${pending ? styles.sending : ""} flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle border-0`}>
+                    <input type="text" name="question" required placeholder="Ask AI about this data — e.g. “top 5 countries by GNP per person”" aria-label="Ask AI a question about the GNP data" maxLength={500} className={`${styles.input} flex-grow-1 bg-transparent border-0`} />
+                    <button type="submit" aria-label="Send prompt" disabled={pending} className={`${styles.send} ${pending ? styles.sending : ""} flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle border-0`}>
                         {pending ? (
                             <output className="spinner-border spinner-border-sm" aria-hidden="true" />
                         ) : (
@@ -47,9 +37,12 @@ export const PromptInput = () => {
             <div className={`${styles.answer} mx-auto`} aria-live="polite">
                 {pending && <p className="mt-3 mt-md-5 mb-0 text-center text-body-secondary">Thinking…</p>}
                 {state.status === "error" && !pending && (
-                    <p className="mt-3 mt-md-5 mb-0 text-center text-danger" role="alert">
-                        {state.error}
-                    </p>
+                    <div className="mt-3 mt-md-5" role="alert">
+                        {/* The form is uncontrolled, so React clears the box on submit — repeat the question back or a
+                            retryable failure (timeout, rate limit) costs the user everything they typed. */}
+                        {state.question && <p className={`${styles.question} mb-1 text-center`}>{state.question}</p>}
+                        <p className="mb-0 text-center text-danger">{state.error}</p>
+                    </div>
                 )}
                 {state.status === "answered" && !pending && (
                     <div className={`${styles.card} mt-3 rounded-4 bg-body-secondary`}>
