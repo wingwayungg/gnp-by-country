@@ -31,12 +31,13 @@ const PromptForm = ({ initialState, onQuestion }: PromptFormProps) => {
                 {/* onSubmit is to record what was typed in PromptInput below for Error Boundary,
                     it does not affect formAction at all and Progressive Enhancement still works. */}
                 <form action={formAction} onSubmit={(event) => onQuestion(questionOf(event.currentTarget))} className={`${styles.bar} d-flex align-items-center gap-2 w-100 rounded-pill bg-body-secondary`}>
+                    {/* Bootstrap Icons "stars" (MIT, https://icons.getbootstrap.com/icons/stars/), inlined rather
+                        than pulling in the package for one glyph.
+                        Deliberately not the Gemini sparkle: that is a Google trademark, and Google's brand
+                        guidance is that integrators attribute in plain text (see the caption below the bar). */}
                     <span className={`${styles.badge} flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle`} aria-hidden="true">
-                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                            <path d="M4 12L8 4L12 12M4 12H12" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                            <circle cx="4" cy="12" r="1.5" fill="white" />
-                            <circle cx="12" cy="12" r="1.5" fill="white" />
-                            <circle cx="8" cy="4" r="1.5" fill="white" />
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="white">
+                            <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
                         </svg>
                     </span>
                     <input type="text" name="question" required placeholder="Ask AI about this data — e.g. “top 5 countries by GNP per person”" aria-label="Ask AI a question about the GNP data" maxLength={500} className={`${styles.input} flex-grow-1 bg-transparent border-0`} />
@@ -51,6 +52,7 @@ const PromptForm = ({ initialState, onQuestion }: PromptFormProps) => {
                     </button>
                 </form>
             </div>
+            <p className={`${styles.credit} mt-2 mb-0 text-center`}>Powered by Gemini</p>
             <div className={`${styles.answer} mx-auto`} aria-live="polite">
                 {pending && <p className="mt-3 mt-md-5 mb-0 text-center text-body-secondary">Thinking…</p>}
                 {state.status === "error" && !pending && (
