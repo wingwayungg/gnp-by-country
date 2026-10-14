@@ -4,11 +4,14 @@ import { ApiError, FinishReason, GoogleGenAI, ThinkingLevel } from "@google/gena
 import { DATA_YEAR, fetchCountryGDP } from "@lib/countryData";
 import { AskState } from "@type/askType";
 
-const MODEL = process.env.GEMINI_MODEL ?? "gemini-3.1-flash-lite"; // free tier on Google AI Studio; the newer flash models are heavily contended there and stall for 15-25s or return 503
+const MODEL = process.env.GEMINI_MODEL ?? "gemini-3.5-flash-lite"; // Flash-Lite is the quickest to first token; the larger Flash models spend longer reasoning before they answer
 const REQUEST_TIMEOUT_MS = 12_000; // a lookup this small never legitimately takes this long — fail fast instead of hanging the UI
 
+const VERTEX_API_KEY = process.env.VERTEX_API_KEY;
+const API_KEY = VERTEX_API_KEY ?? process.env.GEMINI_API_KEY;
+
 // Reused across requests so each one does not repeat client setup.
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY ?? "" });
+const ai = new GoogleGenAI({ vertexai: Boolean(VERTEX_API_KEY), apiKey: API_KEY });
 const MAX_QUESTION_LENGTH = 500;
 
 const buildSystemInstruction = (dataset: string) => `You answer questions about one fixed dataset: GNP per person employed by country, in USD, for the year ${DATA_YEAR} only (World Bank indicator SL.GDP.PCAP.EM.KD). The full dataset is listed at the end of this prompt.
@@ -38,7 +41,7 @@ export async function askQuestion(_prevState: AskState, formData: FormData): Pro
     if (question.length > MAX_QUESTION_LENGTH) {
         return failed(question, `Keep the question under ${MAX_QUESTION_LENGTH} characters.`);
     }
-    if (!process.env.GEMINI_API_KEY) {
+    if (!API_KEY) {
         return failed(question, "The AI service is not configured.");
     }
 

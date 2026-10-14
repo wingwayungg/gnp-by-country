@@ -17,7 +17,7 @@ pnpm lint     # eslint
 
 Node version is pinned via pnpm (`pnpm env use --global 24`, matching the `packageManager` field in `package.json`). There is no test suite configured in this repo.
 
-**Environment**: `GEMINI_API_KEY` (Google AI Studio) must be set in `.env.local` for the `askQuestion` server action; without it the action returns a "not configured" error and only the AI feature is dead — the table still works. `GEMINI_MODEL` optionally overrides the default model. `.env*.local` is gitignored.
+**Environment**: `askQuestion` needs a key in `.env.local`: `VERTEX_API_KEY` (a Vertex AI Express Mode key, billed to the Google Cloud project so Cloud credits apply) takes precedence, otherwise `GEMINI_API_KEY` (Google AI Studio — Cloud free-trial credits cannot be spent there). Without either the action returns a "not configured" error and only the AI feature is dead — the table still works. `GEMINI_MODEL` optionally overrides the default model. `.env*.local` is gitignored.
 
 ## Architecture
 
@@ -38,7 +38,7 @@ Node version is pinned via pnpm (`pnpm env use --global 24`, matching the `packa
 - `thinkingLevel: MINIMAL` and `temperature: 0` are load-bearing. Thinking tokens are drawn from `maxOutputTokens`, so `LOW` spends ~250 of them reasoning and the answer gets cut off mid-number. The pre-sorted dataset is what makes a reasoning budget unnecessary.
 - A `MAX_TOKENS` finish reason is **discarded and returned as an error**, not surfaced. A truncated answer reads as a confident, complete reply while cutting off mid-figure, which is worse than no answer.
 - Every failure returns an `error` state with a distinct user-facing message rather than throwing: a 12s `AbortController` timeout (server-side, around the Gemini call), missing key or `API_KEY_INVALID` → "not configured" (note Gemini rejects a bad key with a **400**, not a 401), 429 → rate limit, anything else → unavailable. Nothing is swallowed — the unexpected (non-`ApiError`) branch still `console.error`s the full error, but returns rather than re-throws, because a throw inside a Server Action reaches the client as an opaque digest and trips the error boundary, taking the whole page down over one failed question.
-- The default model (`gemini-3.1-flash-lite`) is chosen for the free tier, where the newer flash models are heavily contended and stall for 15-25s or return 503. Override with `GEMINI_MODEL` rather than editing the default.
+- The default model (`gemini-3.5-flash-lite`) is chosen for latency: Flash-Lite is the quickest to first token, while the larger Flash models take 1-3s before they start answering. Override with `GEMINI_MODEL` rather than editing the default.
 
 **Component responsibilities:**
 - `components/form/Form.tsx` — filter inputs (country name, GNP min/max), built with Next's `next/form` and uncontrolled inputs (React 19 form actions) so typing doesn't cause re-renders; values are read only on submit and dispatched as a `submit` action.

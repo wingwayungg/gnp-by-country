@@ -11,7 +11,7 @@ This is a simple website, listing the Gross National Product(GNP) per person emp
 
 [![Powered by Google Gemini](https://img.shields.io/badge/Powered%20by-Google%20Gemini-8E75B2?logo=googlegemini&logoColor=white)](https://ai.google.dev/)
 
-A prompt bar sits above the table. It sends the question, together with the full 2020 dataset, to Gemini (`gemini-3.1-flash-lite`) and renders back a short, grounded answer — the model is instructed to answer only from the dataset, never from outside knowledge, so it can't hallucinate a figure for a country or year that isn't in front of it. Below are real exchanges against the live 2020 dataset:
+A prompt bar sits above the table. It sends the question, together with the full 2020 dataset, to Gemini (`gemini-3.5-flash-lite`) and renders back a short, grounded answer — the model is instructed to answer only from the dataset, never from outside knowledge, so it can't hallucinate a figure for a country or year that isn't in front of it. Below are real exchanges against the live 2020 dataset:
 
 | Prompt | Answer |
 | --- | --- |
@@ -25,8 +25,6 @@ A prompt bar sits above the table. It sends the question, together with the full
 | What was North Korea's GNP per person employed? | No data |
 
 The last four rows show the guardrails: a question unrelated to the dataset gets `Irrelevant`, and a question about the right topic but a country the World Bank doesn't publish data for gets `No data` — rather than the model guessing or reaching for outside knowledge.
-
-> **Note:** this runs on Google AI Studio's free tier, which is heavily contended — answers can be quick or can take several seconds, and the server action gives up after 12s and returns an error rather than leaving the request hanging. If you see a timeout or "unavailable" error, it's usually free-tier congestion — try again in a moment.
 
 ## Technical Features
   - **Pre-rendering**. The 2020 GNP figures are a past record, so they are static. The data is fetched from the World Bank API at build time and the homepage is a static route, so visitors get pre-rendered HTML with no wait. Since the data also reaches the client components as the RSC Payload, searching and pagination run entirely on the client with no API calls (so the page works offline), even though the URL changes.
