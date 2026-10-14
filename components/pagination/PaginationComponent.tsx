@@ -8,9 +8,9 @@ interface PaginationComponentType {
 }
 
 export const PaginationComponent = ({ totalPage }: PaginationComponentType) => {
-    const { ACTIONS_QUERY, dispatchQuery } = useQueryAction();
+    const { dispatchQuery } = useQueryAction();
     const { page: currentPage } = useQueryState();
-    const handlePageChange = (page: number) => dispatchQuery({ type: ACTIONS_QUERY.CHANGE_PAGE, payload: { page } });
+    const handlePageChange = (page: number) => dispatchQuery({ type: "change-page", payload: { page } });
 
     // the page no. showed on the leftmost button
     const [leftMostPage, setLeftMostPage] = useState(currentPage);
@@ -18,7 +18,7 @@ export const PaginationComponent = ({ totalPage }: PaginationComponentType) => {
     const [adjustedForPage, setAdjustedForPage] = useState(currentPage);
     if (currentPage !== adjustedForPage) {
         setAdjustedForPage(currentPage);
-        if (currentPage != leftMostPage && currentPage != leftMostPage + 1) setLeftMostPage(currentPage);
+        if (currentPage !== leftMostPage && currentPage !== leftMostPage + 1) setLeftMostPage(currentPage);
     }
 
     const paginationItem = (itemNo: number) => (
@@ -27,17 +27,17 @@ export const PaginationComponent = ({ totalPage }: PaginationComponentType) => {
         </Pagination.Item>
     );
 
-    if (totalPage <= 1) return <></>;
+    if (totalPage <= 1) return null;
 
     return (
         <div className="d-flex justify-content-center mt-4">
             <Pagination className="gap-1">
-                <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage == 1} />
+                <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1} />
                 <Pagination.Prev
                     onClick={() => {
                         handlePageChange(currentPage - 1);
                     }}
-                    disabled={currentPage == 1}
+                    disabled={currentPage === 1}
                 />
                 {leftMostPage < totalPage && paginationItem(leftMostPage)}
                 {leftMostPage + 1 < totalPage && paginationItem(leftMostPage + 1)}
@@ -47,9 +47,9 @@ export const PaginationComponent = ({ totalPage }: PaginationComponentType) => {
                     onClick={() => {
                         handlePageChange(currentPage + 1);
                     }}
-                    disabled={currentPage == totalPage}
+                    disabled={currentPage === totalPage}
                 />
-                <Pagination.Last onClick={() => handlePageChange(totalPage)} disabled={currentPage == totalPage} />
+                <Pagination.Last onClick={() => handlePageChange(totalPage)} disabled={currentPage === totalPage} />
             </Pagination>
         </div>
     );

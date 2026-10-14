@@ -1,4 +1,1 @@
-export enum OrderByEnum {
-    name = "name",
-    gnp = "gnp",
-}
+export type OrderBy = "name" | "gnp";

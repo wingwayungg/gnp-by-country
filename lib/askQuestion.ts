@@ -1,6 +1,6 @@
 "use server";
 
-import { ApiError, GoogleGenAI, ThinkingLevel } from "@google/genai";
+import { ApiError, FinishReason, GoogleGenAI, ThinkingLevel } from "@google/genai";
 import { DATA_YEAR, fetchCountryGDP } from "@lib/countryData";
 import { AskState } from "@type/askType";
 
@@ -76,7 +76,7 @@ export async function askQuestion(_prevState: AskState, formData: FormData): Pro
         .then((response): AskState => {
             // A truncated answer is worse than none: it reads as a confident, complete reply while cutting off
             // mid-number. Surface it as an error rather than letting a half-written figure reach the user.
-            if (response.candidates?.[0]?.finishReason === "MAX_TOKENS") {
+            if (response.candidates?.[0]?.finishReason === FinishReason.MAX_TOKENS) {
                 console.error("Gemini hit maxOutputTokens; answer discarded as truncated");
                 return failed(question, "That answer was too long to finish — try a narrower question.");
             }
@@ -84,7 +84,7 @@ export async function askQuestion(_prevState: AskState, formData: FormData): Pro
             const answer = response.text?.trim();
             return { status: "answered", question, answer: answer || "No data" };
         })
-        .catch((error): AskState => {
+        .catch((error: unknown) => {
             if (abort.signal.aborted) {
                 console.error(`Gemini request exceeded ${REQUEST_TIMEOUT_MS}ms`);
                 return failed(question, "The AI service is taking too long — try again in a moment.");

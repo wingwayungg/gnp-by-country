@@ -1,13 +1,15 @@
 import { useSearchParams } from "next/navigation";
-import { OrderByEnum } from "@type/sortType";
+import { OrderBy } from "@type/sortType";
+
+const toNumber = (value: string | null) => (value === null ? null : Number(value));
 
 const useQueryState = () => {
     const searchParams = useSearchParams();
     return {
         country: searchParams.get("country"),
-        greaterThan: searchParams.get("greaterThan"),
-        lessThan: searchParams.get("lessThan"),
-        orderBy: searchParams.get("orderBy") as `${OrderByEnum}` | null,
+        greaterThan: toNumber(searchParams.get("greaterThan")),
+        lessThan: toNumber(searchParams.get("lessThan")),
+        orderBy: searchParams.get("orderBy") as OrderBy | null,
         orderAsc: searchParams.get("orderAsc") === "true",
         page: Number(searchParams.get("page")) || 1,
     };
