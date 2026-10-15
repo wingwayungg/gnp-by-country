@@ -11,10 +11,10 @@ const outfit = Outfit({
 
 export default function RootLayout({ children }: { readonly children: React.ReactNode }) {
     return (
-        // suppress hydration warning for setting bsTheme below
+        // suppress hydration warning for setting bsTheme below, like what Bootstrap's docs and next-themes do
         <html lang="en" className={outfit.variable} suppressHydrationWarning>
             <head>
-                {/* Runs synchronously before first paint to avoid a light->dark flash on load; see lib/theme.ts and components/ThemeToggle.tsx */}
+                {/* plain <script> run before any next/script such that theme can be applied immediately in UI */}
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `document.documentElement.dataset.bsTheme=(${getInitialTheme.toString()})()`,
